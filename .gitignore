@@ -1,0 +1,14 @@
+# macOS
+.DS_Store
+._*
+
+# Editor / OS cruft
+*.swp
+*~
+Thumbs.db
+
+# Supabase local state (never commit service-role keys or linked-project config)
+Website/supabase/.branches/
+Website/supabase/.temp/
+.env
+.env.*
