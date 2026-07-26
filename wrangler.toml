@@ -24,11 +24,13 @@ directory = "./dist"
 # router and no 404.html, so unknown paths should just 404 rather than be
 # rewritten to a page that does not exist.
 not_found_handling = "none"
-# Every internal link in this site is written WITH the .html extension
-# (<a href="careers.html">, etc.). The default html_handling
-# ("auto-trailing-slash") serves those files at extensionless URLs instead and
-# 307-redirects the .html request away — so every nav click paid for a redirect
-# round trip that server logs would show as traffic to /careers, not
-# /careers.html. "none" serves each file at its literal path with no rewriting,
-# matching how the site actually links to itself.
-html_handling = "none"
+# DO NOT set html_handling = "none". That was tried and reverted: it disables
+# ALL url rewriting, which also removes the implicit "/" -> "/index.html"
+# mapping every static host needs — it took the homepage itself to a 404
+# (confirmed live: "/" 404, "/index.html" 200). The default
+# ("auto-trailing-slash") is what actually works: "/" serves index.html, and
+# .html links (this site references itself with the extension everywhere,
+# e.g. <a href="careers.html">) still resolve, just via one 307 redirect to
+# the extensionless URL first. That redirect is a one-hop, sub-millisecond,
+# same-origin, browser-cached-per-session cost — not a defect worth trading
+# the homepage for. Leaving html_handling unset accepts the default.
