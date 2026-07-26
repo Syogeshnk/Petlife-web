@@ -1,0 +1,6 @@
+# Cloudflare Pages redirects — petlifeindia.co
+#
+# Canonical host is the apex. The Supabase submit-form function allows both
+# https://petlifeindia.co and https://www.petlifeindia.co, so the forms keep
+# working either way, but one canonical host keeps SEO and analytics clean.
+https://www.petlifeindia.co/*  https://petlifeindia.co/:splat  301

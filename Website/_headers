@@ -1,0 +1,31 @@
+# Cloudflare Pages headers — petlifeindia.co
+#
+# CSP ships as Report-Only on purpose. The site uses inline style attributes and
+# an inline ld+json block, and pulls fonts from Google plus photos from Unsplash,
+# so an enforcing policy that is even slightly wrong would break the live page or
+# silently kill the contact forms. Load the site, check the browser console for
+# CSP violation reports, then rename the header to Content-Security-Policy to
+# enforce it.
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://umvsromotyjbrzykmqoh.supabase.co
+
+# HTML is re-fetched often so copy fixes go live quickly.
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# css/ and js/ filenames are not fingerprinted, so they must revalidate or a
+# deploy would leave visitors on stale styles and an old form handler.
+/css/*
+  Cache-Control: public, max-age=3600, must-revalidate
+/js/*
+  Cache-Control: public, max-age=3600, must-revalidate
+
+# Brand assets change rarely.
+/petlife/*
+  Cache-Control: public, max-age=604800

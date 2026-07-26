@@ -331,18 +331,36 @@
           payload.resume_base64 = await fileToBase64(resumeFile);
         }
 
-        const res = await fetch(endpoint, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            apikey: cfg.SUPABASE_ANON_KEY,
-            Authorization: "Bearer " + cfg.SUPABASE_ANON_KEY,
-          },
-          body: JSON.stringify(payload),
-        });
+        let res;
+        try {
+          res = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              apikey: cfg.SUPABASE_ANON_KEY,
+              Authorization: "Bearer " + cfg.SUPABASE_ANON_KEY,
+            },
+            body: JSON.stringify(payload),
+          });
+        } catch (networkErr) {
+          // fetch() rejects only on transport failures: offline, DNS, blocked CORS,
+          // or submit-form not being deployed on the project config.js points at.
+          // The browser's own wording ("Failed to fetch") means nothing to a
+          // visitor, so flag it and route them to a human instead.
+          console.error(networkErr);
+          networkErr.unreachable = true;
+          throw networkErr;
+        }
 
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) throw new Error(data.error || "Request failed");
+        if (!res.ok) {
+          const err = new Error(data.error || "Request failed");
+          // Our function always answers with {error} copy written for users. A body
+          // without one isn't from us (404 before deploy, gateway error), so it gets
+          // the same human fallback rather than a meaningless status line.
+          if (!data.error) err.unreachable = true;
+          throw err;
+        }
 
         form.reset();
         resetFileDrop();
@@ -358,10 +376,14 @@
         );
       } catch (err) {
         console.error(err);
+        const inbox = formKind === "contact" ? "info@petlifeindia.co" : "hr@petlifeindia.co";
         showStatus(
           form,
-          (err && err.message) ||
-            "Something went wrong sending that. Please try again, or email hr@petlifeindia.co.",
+          err && err.unreachable
+            ? "We couldn't reach our server just now. Please email " + inbox +
+                " or call +91 84510 72388 — we'll reply the same day."
+            : (err && err.message) ||
+                "Something went wrong sending that. Please try again, or email " + inbox + ".",
           "error"
         );
       } finally {

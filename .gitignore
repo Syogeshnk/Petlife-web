@@ -12,3 +12,11 @@ Website/supabase/.branches/
 Website/supabase/.temp/
 .env
 .env.*
+
+# Cloudflare Pages staging output — rebuilt by stage-deploy.py, never edited by hand
+/dist/
+
+# Loose brand drop at the repo root. Byte-identical to the tracked master at
+# Website/petlife/logo-master.png (sha256 db4ef941...), so committing it would
+# duplicate 1.5 MB in history for nothing. The tracked copy is the source of record.
+/Logo.png

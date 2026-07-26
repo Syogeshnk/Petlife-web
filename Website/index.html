@@ -9,7 +9,7 @@
   <meta property="og:description" content="Government-ID verified Pet Buddies in your neighbourhood. 0% commission, zero hidden fees. Coming soon on App Store and Google Play.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://petlifeindia.co">
-  <meta name="theme-color" content="#1D6B3C">
+  <meta name="theme-color" content="#1F6B3C">
   <link rel="icon" type="image/png" href="petlife/logo.png">
   <link rel="apple-touch-icon" href="petlife/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,6 +32,16 @@
   </script>
 </head>
 <body>
+  <!-- Page-wide decorative paw layer: five glyphs, fixed to the viewport so
+       exactly that many show at once. Decorative only (aria-hidden +
+       pointer-events:none), so it never blocks a click or reaches a reader. -->
+  <div class="deco-page" aria-hidden="true">
+    <svg class="deco-page__paw deco-page__paw--1" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+    <svg class="deco-page__paw deco-page__paw--2" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+    <svg class="deco-page__paw deco-page__paw--3" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+    <svg class="deco-page__paw deco-page__paw--4" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+    <svg class="deco-page__paw deco-page__paw--5" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+  </div>
 
   <!-- ======================= NAV ======================= -->
   <header class="nav" id="nav">
@@ -61,6 +71,28 @@
 
     <!-- ======================= HERO ======================= -->
     <section class="hero">
+      <!-- Decorative only: blurred organic blobs, drifting paw glyphs, dotted
+           grids and a closing wave. aria-hidden + pointer-events:none, so it is
+           invisible to assistive tech and never blocks a click. -->
+      <div class="deco" aria-hidden="true">
+        <span class="deco__wash"></span>
+        <span class="deco__blob deco__blob--4"></span>
+        <span class="deco__blob deco__blob--3"></span>
+        <span class="deco__blob deco__blob--5"></span>
+        <span class="deco__blob deco__blob--6"></span>
+        <span class="deco__blob deco__blob--1"></span>
+        <span class="deco__blob deco__blob--2"></span>
+
+        <span class="deco__dots deco__dots--1"></span>
+        <span class="deco__dots deco__dots--2"></span>
+
+        <svg class="deco__paw deco__paw--1" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+        <svg class="deco__paw deco__paw--2" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+        <svg class="deco__paw deco__paw--3" viewBox="0 0 64 64" fill="currentColor"><ellipse cx="17" cy="20" rx="7" ry="9.5"/><ellipse cx="31" cy="13" rx="7" ry="10"/><ellipse cx="45" cy="17" rx="6.5" ry="9"/><ellipse cx="55" cy="30" rx="6" ry="8"/><path d="M31 31c8 0 15 5.4 17 12.2 1.9 6.4-2.6 12.3-9.2 12.6-3.9.2-6-1.3-9.5-1.3-3.4 0-5.6 1.6-9.4 1.3-6.6-.5-10.8-6.4-8.8-12.7C13.2 36.3 23 31 31 31Z"/></svg>
+
+        <svg class="deco__wave" viewBox="0 0 1440 190" preserveAspectRatio="none" fill="currentColor"><path d="M0 96c140-46 286-64 430-40 132 22 244 74 380 82 148 9 292-33 428-79 76-26 148-46 202-53v184H0Z"/></svg>
+      </div>
+
       <div class="hero__inner">
         <div class="hero__copy">
           <p class="eyebrow reveal">New beginnings · Stronger bonds · Happier tails</p>
@@ -82,15 +114,15 @@
             <a href="#join" class="btn btn--outline">Become a Pet Buddy</a>
           </div>
           <div class="hero__proof reveal">
-            <div class="hero__stars" aria-hidden="true">★★★★★</div>
-            <p>Trusted by <strong>4,000+ Pet Parents</strong>.</p>
+            <div class="hero__stars" aria-hidden="true">🐾</div>
+            <p>Launching soon. <strong>Be one of the first</strong> in your neighbourhood.</p>
           </div>
         </div>
 
         <!-- CSS rebuild of the app home screen -->
         <div class="hero__phone-wrap reveal">
           <div class="chip chip--float chip--rating" aria-hidden="true">
-            <span class="chip__star">★</span> 4.6 · Govt-ID verified
+            <span class="chip__star">★</span> Govt-ID verified
           </div>
           <div class="chip chip--float chip--live" aria-hidden="true">
             <span class="dot" aria-hidden="true"></span> Dr. Priya is available
@@ -276,7 +308,7 @@
       <div class="walk__stage">
         <svg class="walk__path" viewBox="0 0 800 1400" fill="none" preserveAspectRatio="xMidYMin meet" aria-hidden="true">
           <path id="pawTrail" d="M400 20 C 400 140, 160 180, 160 330 C 160 480, 640 500, 640 680 C 640 860, 160 880, 160 1050 C 160 1200, 400 1240, 400 1380"
-            stroke="#1D6B3C" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 26" opacity="0.28"/>
+            stroke="#1F6B3C" stroke-width="7" stroke-linecap="round" stroke-dasharray="0.1 26" opacity="0.28"/>
         </svg>
         <div class="walk__paw" style="--x:47%; --y:6%"  aria-hidden="true">🐾</div>
         <div class="walk__paw" style="--x:28%; --y:30%" aria-hidden="true">🐾</div>
@@ -317,10 +349,12 @@
           <p>After every visit, both sides review each other, and reviews stay sealed
             until both are in. No pressure, no retaliation. Just honest words.</p>
           <div class="walk-step__vignette">
+            <!-- Illustrative mock-up of the review UI, not a real review. Labelled
+                 as an example so it cannot be read as a customer testimonial. -->
             <div class="mini-review">
-              <div class="mini-review__stars">★★★★★</div>
+              <div class="mini-review__stars" aria-hidden="true">★★★★★</div>
               <p>"Simba now waits at the door for Rahul. I've been replaced."</p>
-              <span>Ananya, Bengaluru</span>
+              <span>Example of how a review appears</span>
             </div>
           </div>
         </article>
@@ -330,11 +364,15 @@
     <!-- ======================= TRUST STRIP ======================= -->
     <section class="strip" id="trust">
       <div class="container">
+        <!-- PRE-LAUNCH. These are commitments we can stand behind today, not usage
+             figures. Do NOT put Buddy counts, pet counts, city counts or an average
+             rating here until they are real and reportable — the original counters
+             are kept in the project notes for when they are. -->
         <div class="strip__card reveal">
-          <div class="strip__stat"><span class="strip__num" data-count="300">0</span><span class="strip__plus">+</span><span class="strip__label">Verified Pet Buddies</span></div>
-          <div class="strip__stat"><span class="strip__num" data-count="12">0</span><span class="strip__label">Cities across India</span></div>
-          <div class="strip__stat"><span class="strip__num" data-count="4000">0</span><span class="strip__plus">+</span><span class="strip__label">Happy pets</span></div>
-          <div class="strip__stat"><span class="strip__num strip__num--star" data-count="4.6" data-decimal="1">0</span><span class="strip__label">Average rating</span></div>
+          <div class="strip__stat"><span class="strip__num" data-count="0">0</span><span class="strip__plus">%</span><span class="strip__label">Commission, always</span></div>
+          <div class="strip__stat"><span class="strip__num" data-count="7">0</span><span class="strip__label">Services at launch</span></div>
+          <div class="strip__stat"><span class="strip__num" data-count="100">0</span><span class="strip__plus">%</span><span class="strip__label">Govt-ID checked Buddies</span></div>
+          <div class="strip__stat"><span class="strip__num" data-count="2026">0</span><span class="strip__label">Launching this year</span></div>
         </div>
       </div>
     </section>
@@ -506,51 +544,37 @@
     </section>
 
     <!-- ======================= TESTIMONIALS ======================= -->
+    <!-- PRE-LAUNCH. This section previously carried five named customer testimonials
+         with star ratings, for a product that has not launched. Fabricated reviews
+         attributed to named people are misleading advertising, and Clause 11.2 of our
+         own Terms forbids exactly that. The original markup is kept in the project
+         notes; restore it only with real, consented reviews from real users. -->
     <section class="section section--surface" id="stories">
       <div class="container">
-        <p class="eyebrow eyebrow--center reveal">Tails of joy</p>
-        <h2 class="section__title section__title--center reveal">The reviews are <em>in</em>.</h2>
+        <p class="eyebrow eyebrow--center reveal">Before we open</p>
+        <h2 class="section__title section__title--center reveal">No reviews yet. <em>That&rsquo;s the point</em>.</h2>
+        <p class="section__sub section__sub--center reveal">
+          Petlife has not launched, so there is nothing here we could honestly call a
+          review. When there is, every word will come from a real Pet Parent or Pet
+          Buddy who used the app. Until then, here is what we are committing to.
+        </p>
 
         <div class="quotes">
           <figure class="quote reveal">
-            <div class="quote__stars">★★★★★</div>
-            <blockquote>Found a vet who does house calls at 9 pm on a Sunday. Momo hates travel, so this app is genuinely life-changing for us.</blockquote>
-            <figcaption>
-              <span class="quote__avatar">AM</span>
-              <div><strong>Ananya M.</strong><em>Pet Parent to Momo · Delhi</em></div>
-            </figcaption>
+            <blockquote>Every Pet Buddy is checked against a government ID before they can be booked. Verification confirms who they are, and we never claim it confirms more.</blockquote>
+            <figcaption><div><strong>Identity, verified</strong><em>Our commitment</em></div></figcaption>
           </figure>
           <figure class="quote reveal">
-            <div class="quote__stars">★★★★★</div>
-            <blockquote>Seeing the ID-verified badge is what convinced my mother. She books walks for Sheru herself now, on her own, at 62.</blockquote>
-            <figcaption>
-              <span class="quote__avatar">RK</span>
-              <div><strong>Rohan K.</strong><em>Pet Parent to Sheru · Kolkata</em></div>
-            </figcaption>
+            <blockquote>0% commission at launch. You pay the Pet Buddy directly, and we take nothing out of it. If that ever changes, you will be told in advance, never retroactively.</blockquote>
+            <figcaption><div><strong>0% commission</strong><em>Our commitment</em></div></figcaption>
           </figure>
           <figure class="quote reveal">
-            <div class="quote__stars">★★★★★</div>
-            <blockquote>I walk dogs on weekends through Petlife and keep every rupee. Six regulars now, and honestly the best colleagues I've had.</blockquote>
-            <figcaption>
-              <span class="quote__avatar">PS</span>
-              <div><strong>Priyanka S.</strong><em>Pet Buddy · Pune</em></div>
-            </figcaption>
+            <blockquote>Reviews stay sealed until both sides have submitted, so neither party can hold a rating hostage. We never edit a review to make it kinder.</blockquote>
+            <figcaption><div><strong>Honest reviews</strong><em>Our commitment</em></div></figcaption>
           </figure>
           <figure class="quote reveal">
-            <div class="quote__stars">★★★★★</div>
-            <blockquote>We travelled for Diwali and boarded Laddu with a Buddy two lanes away. Daily photos, zero guilt, and no platform fee on top.</blockquote>
-            <figcaption>
-              <span class="quote__avatar">MJ</span>
-              <div><strong>Meera J.</strong><em>Pet Parent to Laddu · Jaipur</em></div>
-            </figcaption>
-          </figure>
-          <figure class="quote reveal">
-            <div class="quote__stars">★★★★★</div>
-            <blockquote>The pet taxi got Mango to his dentist appointment in an AC cab without a single yowl. I did not know I needed this until I did.</blockquote>
-            <figcaption>
-              <span class="quote__avatar">SV</span>
-              <div><strong>Sanjay V.</strong><em>Pet Parent to Mango · Chennai</em></div>
-            </figcaption>
+            <blockquote>Your address is shared only after you confirm a booking, and map pins are blurred by about 300 metres until then. We do not sell your data.</blockquote>
+            <figcaption><div><strong>Your privacy</strong><em>Our commitment</em></div></figcaption>
           </figure>
         </div>
       </div>
@@ -761,42 +785,17 @@
           <a href="careers.html">Careers</a>
           <a href="#contact">Contact us</a>
         </nav>
+        <nav class="footer__col" aria-label="Legal">
+          <h4>Legal</h4>
+          <a href="terms.html">Terms &amp; Conditions</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </nav>
       </div>
       <p class="footer__script" aria-hidden="true">One platform. Many services. Unlimited love.</p>
 
-      <!-- ===== Legal footer area: disclaimer + contact; legal nav sits directly below ===== -->
-      <div class="footer__legalbar">
-        <div class="footer__legalbar-main">
-          <h4>Platform disclaimer</h4>
-          <p class="footer__notice">
-            <strong>Petlife is a listing platform, not a service provider.</strong>
-            Pet Buddies are independent contractors who run their own businesses. They are not
-            employees or agents of Petlife, and Petlife neither supervises, directs nor guarantees
-            the services they provide, nor any agreement or payment between them and a Pet Parent.
-            Verification confirms government identity documents only; it is not a warranty of skill,
-            conduct or outcome, and the onus of pre-service due diligence rests with the Pet Parent.
-            Petlife currently charges 0% commission and reserves the right to introduce a platform
-            fee in future at its sole discretion. Read the
-            <a href="disclaimer.html">Platform Disclaimer</a> and
-            <a href="terms.html">Terms &amp; Conditions</a> for the full position.
-          </p>
-        </div>
-        <div class="footer__legalbar-contact">
-          <h4>Contact</h4>
-          <a href="tel:+918451072388">+91 84510 72388</a>
-          <a href="mailto:info@petlifeindia.co">info@petlifeindia.co</a>
-          <a href="mailto:hr@petlifeindia.co">hr@petlifeindia.co</a>
-          <a href="https://www.instagram.com/petlife_india" target="_blank" rel="noopener noreferrer">@petlife_india</a>
-        </div>
-      </div>
 
       <div class="footer__bottom">
-        <p>© 2026 Petlife · petlifeindia.co</p>
-        <nav class="footer__legal" aria-label="Legal links">
-          <a href="terms.html">Terms &amp; Conditions</a>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="disclaimer.html">Platform Disclaimer</a>
-        </nav>
+        <p>&copy; 2026 Petlife India. All rights reserved.</p>
       </div>
     </div>
   </footer>

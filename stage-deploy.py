@@ -1,0 +1,78 @@
+#!/usr/bin/env python3
+"""Stage the public site into dist/ for Cloudflare Pages.
+
+Website/ holds more than the public site: Supabase migrations and edge-function
+source, the CLI's linked-project state under supabase/.temp, internal READMEs and
+the 1.5 MB logo master. Cloudflare Pages uploads whatever directory you point it
+at, so deploying Website/ directly would publish all of that. This copies only
+what belongs on the public site.
+
+    python stage-deploy.py          # rebuild dist/
+    npx wrangler pages deploy dist --project-name petlife-web
+"""
+import shutil
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+SRC = ROOT / "Website"
+DIST = ROOT / "dist"
+
+# Everything the public site needs, and nothing else.
+FILES = [
+    "index.html", "careers.html", "terms.html", "privacy.html", "disclaimer.html",
+    "_headers", "_redirects", "robots.txt", "sitemap.xml",
+]
+TREES = ["css", "js"]
+# petlife/ is copied selectively: the served mark only. The masters are the
+# source of record (1.5 MB) and have no business being downloaded by visitors.
+BRAND = ["logo.png"]
+
+
+def main() -> int:
+    if not SRC.is_dir():
+        print(f"error: {SRC} not found", file=sys.stderr)
+        return 1
+
+    if DIST.exists():
+        shutil.rmtree(DIST)
+    DIST.mkdir(parents=True)
+
+    missing = []
+    for name in FILES:
+        src = SRC / name
+        if src.is_file():
+            shutil.copy2(src, DIST / name)
+        else:
+            missing.append(name)
+
+    for tree in TREES:
+        src = SRC / tree
+        if src.is_dir():
+            shutil.copytree(src, DIST / tree)
+        else:
+            missing.append(tree + "/")
+
+    (DIST / "petlife").mkdir()
+    for name in BRAND:
+        src = SRC / "petlife" / name
+        if src.is_file():
+            shutil.copy2(src, DIST / "petlife" / name)
+        else:
+            missing.append(f"petlife/{name}")
+
+    total = sum(p.stat().st_size for p in DIST.rglob("*") if p.is_file())
+    count = sum(1 for p in DIST.rglob("*") if p.is_file())
+    print(f"staged {count} files, {total/1024:.0f} KB -> {DIST}")
+    for p in sorted(DIST.rglob("*")):
+        if p.is_file():
+            print(f"  {p.relative_to(DIST).as_posix()}")
+
+    if missing:
+        print("\nWARNING - expected but not found:", ", ".join(missing), file=sys.stderr)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
