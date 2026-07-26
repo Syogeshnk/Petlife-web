@@ -12,7 +12,10 @@
 #   Build command:   python3 stage-deploy.py
 #   Deploy command:  npx wrangler deploy
 
-name = "petlife-web"
+# Must match the Cloudflare project name exactly ("petlifeweb", no hyphen) or
+# every build logs "Failed to match Worker name" and silently overrides this
+# value, and Workers Builds will auto-open a PR against this file to fix it.
+name = "petlifeweb"
 compatibility_date = "2026-07-26"
 
 [assets]
@@ -21,3 +24,11 @@ directory = "./dist"
 # router and no 404.html, so unknown paths should just 404 rather than be
 # rewritten to a page that does not exist.
 not_found_handling = "none"
+# Every internal link in this site is written WITH the .html extension
+# (<a href="careers.html">, etc.). The default html_handling
+# ("auto-trailing-slash") serves those files at extensionless URLs instead and
+# 307-redirects the .html request away — so every nav click paid for a redirect
+# round trip that server logs would show as traffic to /careers, not
+# /careers.html. "none" serves each file at its literal path with no rewriting,
+# matching how the site actually links to itself.
+html_handling = "none"
