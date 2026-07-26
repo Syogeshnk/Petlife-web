@@ -1,6 +1,21 @@
-# Cloudflare Pages redirects — petlifeindia.co
+# Cloudflare Workers Assets redirects — petlifeindia.co
 #
-# Canonical host is the apex. The Supabase submit-form function allows both
-# https://petlifeindia.co and https://www.petlifeindia.co, so the forms keep
-# working either way, but one canonical host keeps SEO and analytics clean.
-https://www.petlifeindia.co/*  https://petlifeindia.co/:splat  301
+# NO www -> apex RULE HERE, AND DO NOT ADD ONE.
+#
+# Workers Assets only accepts *relative* URLs in this file. A cross-host rule
+# such as
+#     https://www.petlifeindia.co/*  https://petlifeindia.co/:splat  301
+# is rejected at deploy time with "Only relative URLs are allowed [code: 100324]"
+# and fails the whole deployment after the assets have already uploaded. (Classic
+# Cloudflare Pages did allow it, which is where that pattern comes from.)
+#
+# Canonicalising www -> apex is done instead with a zone-level Redirect Rule:
+#   Cloudflare dashboard -> petlifeindia.co -> Rules -> Redirect Rules
+#   When: hostname equals www.petlifeindia.co
+#   Then: dynamic redirect to concat("https://petlifeindia.co", http.request.uri.path)
+#         status 301, preserve query string
+#
+# The Supabase submit-form function allows both hosts, so the forms keep working
+# either way; the redirect is for canonical SEO and clean analytics.
+#
+# Same-origin path redirects (e.g. /old-page /new-page 301) are fine to add below.
