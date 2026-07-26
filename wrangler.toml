@@ -12,7 +12,7 @@
 #   Build command:   python3 stage-deploy.py
 #   Deploy command:  npx wrangler deploy
 
-name = "petlife-web"
+name = "petlifeweb"
 compatibility_date = "2026-07-26"
 
 [assets]
