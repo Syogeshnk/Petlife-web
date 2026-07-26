@@ -1,0 +1,23 @@
+# Cloudflare Workers static-assets config for petlifeindia.co.
+#
+# The site is pure static HTML/CSS/JS — there is no Worker script, so there is no
+# `main` entry. Wrangler serves ./dist directly, including its _headers and
+# _redirects files.
+#
+# ./dist is NOT in git. It is produced by stage-deploy.py, which copies only the
+# public files out of Website/. Pointing this at Website/ instead would publish
+# the Supabase migrations, the edge-function source and the CLI's linked-project
+# state. So the build command must run before the deploy command:
+#
+#   Build command:   python3 stage-deploy.py
+#   Deploy command:  npx wrangler deploy
+
+name = "petlife-web"
+compatibility_date = "2026-07-26"
+
+[assets]
+directory = "./dist"
+# Every route is a real file (index.html, careers.html, ...). There is no SPA
+# router and no 404.html, so unknown paths should just 404 rather than be
+# rewritten to a page that does not exist.
+not_found_handling = "none"
