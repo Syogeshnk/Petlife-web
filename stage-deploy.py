@@ -24,9 +24,10 @@ FILES = [
     "_headers", "_redirects", "robots.txt", "sitemap.xml",
 ]
 TREES = ["css", "js"]
-# petlife/ is copied selectively: the served mark only. The masters are the
+# petlife/ is copied selectively: the served artwork only. The masters are the
 # source of record (1.5 MB) and have no business being downloaded by visitors.
-BRAND = ["logo.png"]
+# Anything referenced from the HTML must be listed here or it 404s in production.
+BRAND = ["logo.png", "pets-photo.webp"]
 
 
 def main() -> int:
