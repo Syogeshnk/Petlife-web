@@ -27,6 +27,7 @@ const SERVICE_LABELS: Record<string, string> = {
 
 const POSITIONS = [
   "ui_ux_designer", "test_engineer", "digital_brand_marketing", "seo", "content_creator",
+  "ui_ux_engineer", "mobile_developer", "prompt_engineer_ai",
 ] as const;
 
 const POSITION_LABELS: Record<string, string> = {
@@ -35,6 +36,9 @@ const POSITION_LABELS: Record<string, string> = {
   digital_brand_marketing: "Digital Brand Marketing Specialist Intern",
   seo: "Search Engine Optimizer (SEO) Intern",
   content_creator: "Junior Content Creator & Pet Storyteller",
+  ui_ux_engineer: "UI/UX Engineer",
+  mobile_developer: "Mobile App Developer (Android & iOS)",
+  prompt_engineer_ai: "AI Prompt Engineer (Claude Antigravity)",
 };
 
 const EXPERIENCE_LEVELS = ["fresher", "lt3", "3to6", "6to10", "10plus"] as const;

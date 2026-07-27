@@ -7,9 +7,13 @@
 *~
 Thumbs.db
 
-# Supabase local state (never commit service-role keys or linked-project config)
+# Supabase local state (never commit service-role keys or linked-project config).
+# The root-level pair appears if the CLI is run from the repo root instead of
+# Website/, which is where config.toml actually lives.
 Website/supabase/.branches/
 Website/supabase/.temp/
+/supabase/.branches/
+/supabase/.temp/
 .env
 .env.*
 
@@ -20,3 +24,12 @@ Website/supabase/.temp/
 # Website/petlife/logo-master.png (sha256 db4ef941...), so committing it would
 # duplicate 1.5 MB in history for nothing. The tracked copy is the source of record.
 /Logo.png
+
+# Full-resolution source art and app captures dropped at the repo root (~5.5 MB
+# combined). Each is shipped as an optimised WebP instead — the icons as
+# Website/petlife/pets-*.webp, the app screens in the Supabase "site-media"
+# bucket — so the originals would only bloat history. Same reasoning as Logo.png.
+/icon1.png
+/icon2.png
+/Buddy request.png
+/My booking.png

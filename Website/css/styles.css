@@ -182,7 +182,7 @@ em { font-style: italic; }
    sage ring; the pill itself never changes colour, so the logo keeps its contrast. */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  padding: 18px 0;
+  padding: 28px 0;
   transition: padding .3s var(--ease);
 }
 .nav__inner {
@@ -213,6 +213,8 @@ em { font-style: italic; }
 .nav__logo img, .footer__logo img, .app-hero__logo img {
   flex-shrink: 0; display: block; border-radius: 24%;
 }
+/* Scaled down from the 46px in the markup to match the tightened footer. */
+.footer__logo img { width: 37px; height: 37px; }
 .nav__logo-lock { display: flex; flex-direction: column; line-height: 1; }
 .nav__logo-text {
   font-family: var(--font-display); font-weight: 700; font-size: 23px;
@@ -269,32 +271,6 @@ em { font-style: italic; }
 .deco {
   position: absolute; inset: 0; overflow: hidden;
   pointer-events: none; z-index: 0;
-}
-
-/* ---- Page-wide paw layer -------------------------------------------------
-   Five paws, fixed to the viewport so exactly that many are ever on screen,
-   at 40–60% opacity per the brief. They use the light accent green rather than
-   the primary brand green: at these opacities the darker green competes with
-   body copy, while the accent stays clearly visible without fighting the text.
-   Positioned toward the margins so they sit beside content, not under it.    */
-.deco-page {
-  position: fixed; inset: 0; overflow: hidden;
-  pointer-events: none; z-index: 0;
-}
-.deco-page__paw { position: absolute; color: var(--accent); }
-.deco-page__paw--1 { width: 88px;  top: 14vh;  left: 2.5%;   opacity: 0.5;  transform: rotate(-22deg); }
-.deco-page__paw--2 { width: 58px;  top: 38vh;  right: 3.5%;  opacity: 0.6;  transform: rotate(16deg); }
-.deco-page__paw--3 { width: 104px; top: 62vh;  left: 5%;     opacity: 0.42; transform: rotate(9deg); }
-.deco-page__paw--4 { width: 70px;  bottom: 8vh; right: 6%;   opacity: 0.55; transform: rotate(-13deg); }
-.deco-page__paw--5 { width: 46px;  top: 6vh;   right: 22%;   opacity: 0.45; transform: rotate(28deg); }
-
-/* Content sits above the fixed paw layer. */
-main, .footer { position: relative; z-index: 1; }
-
-@media (max-width: 900px) {
-  /* Narrow screens have no free margin, so the larger paws would land under
-     body copy — keep only the two that stay clear of the text column. */
-  .deco-page__paw--3, .deco-page__paw--5, .deco-page__paw--1 { display: none; }
 }
 
 /* Blobs — irregular border-radius plus a heavy blur reads as an organic wash.
@@ -379,7 +355,7 @@ main, .footer { position: relative; z-index: 1; }
 /* ==========================================================================
    HERO
    ========================================================================== */
-.hero { position: relative; padding: 160px 0 84px; overflow: hidden; }
+.hero { position: relative; padding: 182px 0 84px; overflow: hidden; }
 .hero__inner {
   max-width: var(--container); margin: 0 auto; padding: 0 24px;
   display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center;
@@ -559,13 +535,15 @@ main, .footer { position: relative; z-index: 1; }
 /* ==========================================================================
    PROMISE BAND — 0% commission, stated plainly
    ========================================================================== */
-.promise { padding: 0 0 96px; }
+/* Sits directly under the hero, so it carries generous padding on both sides to
+   separate the value proposition from the hero above and the body content below. */
+.promise { padding: 68px 0 108px; }
 .promise__grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
   border: 1px solid var(--border-color); border-radius: 22px;
   overflow: hidden; background: var(--bg-white);
 }
-.promise__item { padding: 30px 32px; border-right: 1px solid var(--border-color); }
+.promise__item { padding: 38px 32px; border-right: 1px solid var(--border-color); }
 .promise__item:last-child { border-right: none; }
 .promise__num {
   font-family: var(--font-display); font-size: 2rem; font-weight: 600;
@@ -734,6 +712,7 @@ main, .footer { position: relative; z-index: 1; }
 .bento__cell:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-card); }
 .bento__cell--wide { flex-direction: row; align-items: center; justify-content: space-between; gap: 10px; }
 .bento__img { width: 100%; height: 240px; flex: 1; min-height: 240px; object-fit: cover; background: var(--surface-bg); }
+.bento__illustration svg { display: block; width: 100%; height: 100%; }
 .bento__body { padding: 26px; }
 .bento__emoji {
   display: inline-grid; place-items: center;
@@ -863,6 +842,9 @@ main, .footer { position: relative; z-index: 1; }
 }
 .join__photo { position: relative; }
 .join__photo img { border-radius: 20px; width: 100%; height: 290px; object-fit: cover; background: var(--surface-bg); }
+/* App-screen preview: anchor the crop to the top so the screen's own header and
+   tabs stay visible instead of centring on the middle of a tall phone capture. */
+.join__photo--app img { object-position: center top; border: 1px solid var(--border-color); }
 .chip--earn { position: absolute; bottom: 16px; left: 16px; }
 
 /* ==========================================================================
@@ -952,20 +934,52 @@ main, .footer { position: relative; z-index: 1; }
 /* ==========================================================================
    FINAL CTA + COMING SOON STORE BUTTONS
    ========================================================================== */
-.cta-final { padding: 40px 0 104px; }
+.cta-final { padding: 24px 0 64px; }
 .cta-final__card {
   background: var(--btn-gradient);
-  border-radius: 30px; padding: 78px 40px;
+  border-radius: 26px; padding: 42px 36px;
   text-align: center; position: relative; overflow: hidden;
 }
-.cta-final__paw { position: absolute; left: -20px; bottom: -40px; font-size: 170px; opacity: .07; transform: rotate(16deg); }
+.cta-final__paw { position: absolute; left: -18px; bottom: -34px; font-size: 130px; opacity: .07; transform: rotate(16deg); }
+/* Pet pair above the closing pitch — transparent cutout, so it sits on the green
+   gradient without a plate behind it. Portrait crop, so kept narrow to stay in
+   proportion with the heading below it. */
+/* Pulled out of the flow and anchored to the right edge, so it reads as part of
+   the card's background and costs the section no vertical height. It sits behind
+   the copy (z-index 0 against the positioned content), fades down as the card
+   narrows, and scales with the viewport so it never crowds the centred text. */
+.cta-final__pets {
+  position: absolute; right: 1.5%; bottom: 0; margin: 0;
+  width: clamp(128px, 17vw, 215px); height: auto;
+  pointer-events: none; z-index: 0;
+}
 .cta-final__card h2 {
   font-family: var(--font-display); color: #fff; font-weight: 600;
-  font-size: clamp(2rem, 4.2vw, 3.1rem); line-height: 1.12;
-  letter-spacing: -0.015em; margin-bottom: 14px; position: relative;
+  font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.15;
+  letter-spacing: -0.015em; margin-bottom: 8px; position: relative;
 }
 .cta-final__card h2 em { color: #A8DDB0; }
-.cta-final__card > p { color: rgba(255,255,255,0.82); font-size: 1.06rem; margin-bottom: 32px; position: relative; }
+/* No generic `.cta-final__card > p` rule: the only paragraphs left in this card
+   are .soon-tag and .script-line, and a descendant rule here outranks both of
+   their own class selectors, silently overriding their type sizes. */
+/* The two real actions in this banner. They lead the store badges below both by
+   position and by colour, because these are the things a visitor can actually do
+   today — the badges are informational until the apps are published. */
+.cta-final__actions {
+  display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+  position: relative; margin-bottom: 18px;
+}
+.cta-final__btn {
+  background: #fff; color: var(--primary-dark);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.20);
+}
+.cta-final__btn:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,0.26); }
+.cta-final__btn--alt {
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.55); box-shadow: none;
+}
+.cta-final__btn--alt:hover { background: rgba(255,255,255,0.12); border-color: #fff; box-shadow: none; }
+
 .cta-final__buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; position: relative; }
 
 .store-btn {
@@ -978,25 +992,39 @@ main, .footer { position: relative; z-index: 1; }
 .store-btn span { display: flex; flex-direction: column; text-align: left; line-height: 1.25; font-weight: 600; font-size: 15px; }
 .store-btn span em { font-style: normal; font-weight: 500; font-size: 10.5px; opacity: .72; }
 .store-btn svg { opacity: .85; }
+
+/* Final-CTA variant: crisp glass plates — clearly drawn callout buttons that stay
+   legible on the green card, but deliberately a step below the solid white action
+   buttons above them. No hover response: these are "coming soon" placeholders
+   (role="img"), not links, and a hover state would signal a click target that
+   does not exist. */
+.cta-final__buttons .store-btn {
+  background: rgba(255,255,255,0.14); border-color: rgba(255,255,255,0.45);
+  color: #fff; padding: 13px 24px; border-radius: 16px;
+}
+.cta-final__buttons .store-btn svg { opacity: .95; }
+.cta-final__buttons .store-btn span { font-size: 15px; }
+.cta-final__buttons .store-btn span em { opacity: .78; }
+
 .soon-tag {
   display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(255,255,255,0.16); color: #fff;
-  border-radius: 50px; padding: 7px 16px;
-  font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em;
-  margin-bottom: 18px; position: relative;
+  background: rgba(255,255,255,0.22); color: #fff;
+  border-radius: 50px; padding: 8px 18px;
+  font-size: 12.5px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 20px; position: relative;
 }
-.script-line { font-family: var(--font-script); font-size: clamp(1.7rem, 3.2vw, 2.2rem); color: #A8DDB0 !important; margin: 26px 0 0 !important; position: relative; }
-.cta-final__note { font-size: 13px !important; color: rgba(255,255,255,0.68) !important; margin: 14px 0 0 !important; }
+/* Sits between the heading and the actions, so it keeps a tight margin on both
+   sides rather than the trailing-line spacing it had at the foot of the card. */
+.script-line { font-family: var(--font-script); font-size: clamp(1.4rem, 2.4vw, 1.75rem); color: #A8DDB0 !important; margin: 0 0 22px !important; position: relative; }
 
-/* Footer variant of the store buttons */
-.footer__stores { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px; }
-.footer__stores .store-btn { padding: 10px 16px; }
-.footer__stores .store-btn span { font-size: 13.5px; }
 
 /* ==========================================================================
    CAREERS PAGE
    ========================================================================== */
-.page-hero { padding: 140px 0 64px; background: var(--surface-bg); }
+.page-hero { position: relative; overflow: hidden; padding: 162px 0 64px; background: var(--surface-bg); }
+.page-hero .deco__wave { z-index: 0; }
+.page-hero .container { position: relative; z-index: 1; }
 .page-hero__title {
   font-family: var(--font-display); font-weight: 600;
   font-size: clamp(2.2rem, 4.6vw, 3.5rem); line-height: 1.1;
@@ -1133,21 +1161,22 @@ main, .footer { position: relative; z-index: 1; }
 /* ==========================================================================
    FOOTER
    ========================================================================== */
-.footer { background: var(--primary-dark); color: rgba(255,255,255,0.72); padding: 66px 0 32px; }
-/* Two columns only: the brand block, and Company links hugging the right edge.
-   Services / Get in touch / Legal now live in the legal footer area below. */
+.footer { background: var(--primary-dark); color: rgba(255,255,255,0.72); padding: 38px 0 18px; }
+/* Brand block plus link columns. The --wide variant adds a fourth column for
+   Contact; pages that render three columns keep the base rule unchanged. */
 .footer__top {
-  display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 36px 60px;
-  padding-bottom: 42px; border-bottom: 1px solid rgba(255,255,255,0.13);
+  display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 22px 44px;
+  padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.13);
 }
-.footer__logo { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
-.footer__logo > span { display: flex; flex-direction: column; line-height: 1; font-family: var(--font-display); font-size: 24px; font-weight: 700; color: #fff; }
+.footer__top--wide { grid-template-columns: 1.7fr 1fr 1fr 1.1fr; }
+.footer__logo { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.footer__logo > span { display: flex; flex-direction: column; line-height: 1; font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; }
 .footer__logo em {
   font-family: var(--font-body); font-style: normal;
   font-size: 9.5px; font-weight: 700; color: rgba(255,255,255,0.6);
   letter-spacing: 0.16em; text-transform: uppercase; margin-top: 4px;
 }
-.footer__brand p { font-size: 14.5px; line-height: 1.6; }
+.footer__brand p { font-size: 13px; line-height: 1.5; }
 .footer__social { margin-top: 16px; }
 .footer__social a {
   display: inline-flex; align-items: center; gap: 9px;
@@ -1156,17 +1185,24 @@ main, .footer { position: relative; z-index: 1; }
   transition: background .25s var(--ease), transform .25s var(--ease);
 }
 .footer__social a:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
-.footer__col { display: flex; flex-direction: column; gap: 11px; }
-.footer__col h4 { color: #fff; font-size: 12.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
-.footer__col a { color: rgba(255,255,255,0.72); font-size: 14.5px; transition: color .25s var(--ease); }
-.footer__col a:hover { color: #fff; }
-.footer__script { font-family: var(--font-script); font-size: 1.6rem; color: #A8DDB0; text-align: center; padding: 24px 0 4px; }
+.footer__col { display: flex; flex-direction: column; align-items: flex-start; gap: 7px; }
+.footer__col h4 {
+  color: #fff; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 3px;
+}
+.footer__col a {
+  color: rgba(255,255,255,0.72); font-size: 13.5px;
+  transition: color .25s var(--ease), transform .25s var(--ease);
+}
+.footer__col a:hover { color: #fff; transform: translateX(3px); }
+.footer__script { font-family: var(--font-script); font-size: 1.12rem; color: #A8DDB0; text-align: center; padding: 14px 0 2px; }
+
 .footer__bottom {
-  display: flex; justify-content: space-between; gap: 16px 26px; flex-wrap: wrap;
+  display: flex; justify-content: space-between; gap: 12px 26px; flex-wrap: wrap;
   align-items: center;
-  padding-top: 26px; font-size: 13px; color: rgba(255,255,255,0.52);
-  border-top: 1px solid rgba(255,255,255,0.13);
-  margin-top: 26px;
+  padding-top: 13px; font-size: 12px; color: rgba(255,255,255,0.58);
+  border-top: 1px solid rgba(255,255,255,0.09);
+  margin-top: 13px;
 }
 .footer__legal { display: flex; gap: 22px; flex-wrap: wrap; }
 .footer__legal a {
@@ -1236,6 +1272,10 @@ main, .footer { position: relative; z-index: 1; }
   .join__grid, .contact__grid { grid-template-columns: 1fr; gap: 36px; }
   .values { grid-template-columns: 1fr; }
   .footer__top { grid-template-columns: 1.6fr auto auto; gap: 32px 40px; }
+  /* Brand spans the full width, the three link columns share the row beneath it,
+     so the Contact column never gets squeezed to an unreadable width. */
+  .footer__top--wide { grid-template-columns: repeat(3, 1fr); gap: 34px 40px; }
+  .footer__top--wide .footer__brand { grid-column: 1 / -1; }
   .footer__legalbar { grid-template-columns: 1.6fr auto; }
   .bento {
     grid-template-columns: 1fr 1fr;
@@ -1259,7 +1299,7 @@ main, .footer { position: relative; z-index: 1; }
   .nav__phone span { display: none; }
   .nav__phone { padding: 9px; background: var(--surface-bg); border-radius: 50%; }
   .nav__logo-tag { display: none; }
-  .hero { padding-top: 124px; }
+  .hero { padding-top: 146px; }
   .services__grid { grid-template-columns: 1fr; }
   .gallery__grid { grid-template-columns: repeat(2, 1fr); }
   .gallery figure:nth-child(n+5) { display: block; }
@@ -1280,18 +1320,102 @@ main, .footer { position: relative; z-index: 1; }
   .form-card { padding: 26px 22px; border-radius: 20px; }
   .field-row { grid-template-columns: 1fr; gap: 0; }
   .join__photo img { height: 230px; }
-  .page-hero { padding: 110px 0 48px; }
+  .page-hero { padding: 132px 0 48px; }
   .legal { padding: 44px 0 72px; }
   .legal__layout { grid-template-columns: 1fr; gap: 30px; }
   .legal__toc { position: static; }
-  .cta-final__card { padding: 56px 24px; }
-  .footer__top { grid-template-columns: 1fr; }
+  .cta-final__card { padding: 36px 22px; }
+  /* Card is too narrow now for the pets to sit beside the copy, so they drop
+     behind it as a soft watermark rather than colliding with the text. */
+  .cta-final__pets { right: -14px; width: 150px; opacity: .34; }
+  .footer__top, .footer__top--wide { grid-template-columns: 1fr; }
   .footer__legalbar { grid-template-columns: 1fr; padding: 18px 18px; }
 }
 
 @media (max-width: 560px) {
   .nav__icon { display: none; }
   .store-btn { width: 100%; justify-content: center; }
+  /* Store callouts stack full-width; the CTA row becomes a single column so the
+     two badges read as one stacked pair rather than an uneven wrap. */
+  .cta-final__buttons { flex-direction: column; align-items: stretch; }
+  .cta-final__actions { flex-direction: column; align-items: stretch; }
+  .cta-final__card { padding: 32px 18px; border-radius: 22px; }
+  .cta-final__pets { right: -20px; width: 116px; opacity: .26; }
+  .cta-final__paw { font-size: 104px; left: -14px; bottom: -26px; }
+}
+
+/* ==========================================================================
+   STATUS TEXT ANIMATIONS
+   Subtle, continuous animations on specific status/trust copy only — no
+   change to font, color, size or placement, and no other badge/heading
+   sitewide is touched: each rule is scoped to a dedicated hook class
+   (.bento__cell--live, .bento__cell--verified) added only to these two
+   bento cells, so shared classes like .badge--green (also used for the
+   "Internship" tags on careers.html and an unrelated provider card in the
+   phone mockup) are unaffected elsewhere. All of it is neutralised by the
+   sitewide prefers-reduced-motion rule below.
+   ========================================================================== */
+
+/* "Launching soon" — both occurrences (hero proof line, app-store tag). */
+.anim-launch { animation: launchPulse 2.4s ease-in-out infinite; }
+@keyframes launchPulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .55; }
+}
+
+/* Shared soft glow for the two trust/status headings ("Live availability",
+   "Verified against government ID") — a breathing text-shadow, so the glyph
+   colour itself never changes. */
+.glow-heading { animation: headingGlow 3s ease-in-out infinite; }
+@keyframes headingGlow {
+  0%, 100% { text-shadow: 0 0 0 rgba(31,107,60,0); }
+  50%      { text-shadow: 0 0 10px rgba(31,107,60,.35); }
+}
+
+/* Live availability — Available / Busy / Closed each pulse at a pace and
+   depth that matches what the badge means: Available glows like something
+   live, Busy breathes slower and shallower, Closed slower and shallower
+   again, so a glance reads the state before the word is even parsed. */
+.bento__cell--live .badge--green {
+  animation: statusGlowGreen 2.2s ease-in-out infinite;
+}
+.bento__cell--live .badge--neutral {
+  animation: statusBreathe 3.6s ease-in-out infinite;
+}
+.bento__cell--live .badge--grey {
+  animation: statusBreathe 5s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
+@keyframes statusGlowGreen {
+  0%, 100% { box-shadow: 0 0 0 rgba(56,179,74,0); }
+  50%      { box-shadow: 0 0 9px rgba(56,179,74,.5); }
+}
+@keyframes statusBreathe {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .68; }
+}
+
+/* Verified against government ID — the two checkmark badges get the same
+   green glow language as "Available", since both are a green success state. */
+.bento__cell--verified .badge--green {
+  animation: statusGlowGreen 2.6s ease-in-out infinite;
+}
+.bento__cell--verified .badge--green:nth-of-type(2) { animation-delay: .3s; }
+
+/* Live availability bell — small unread-count badge, same idea as a phone's
+   notification dot, hinting there's new activity to see inside the app. */
+.bento__emoji--notif { position: relative; overflow: visible; }
+.notif-badge {
+  position: absolute; top: -4px; right: -4px;
+  min-width: 18px; height: 18px; padding: 0 4px;
+  border-radius: 999px; background: #E5484D; color: #fff;
+  font-size: 11px; font-weight: 700; line-height: 18px; text-align: center;
+  font-family: var(--font-body); box-shadow: 0 0 0 2px var(--bg-white);
+  animation: notifPop 2.4s ease-in-out infinite;
+}
+@keyframes notifPop {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.15); }
 }
 
 /* ==========================================================================
