@@ -254,13 +254,23 @@ em { font-style: italic; }
 }
 .nav__phone:hover { background: var(--light-green); }
 .nav__burger {
-  display: none; flex-direction: column; gap: 5px;
-  background: none; border: none; cursor: pointer; padding: 10px;
+  display: none; flex-direction: column; justify-content: center;
+  align-items: center; gap: 5px;
+  width: 42px; height: 42px; padding: 0;
+  background: var(--surface-bg); border: 1px solid var(--border-color);
+  border-radius: 50%; cursor: pointer;
+  transition: background .25s var(--ease), border-color .25s var(--ease);
 }
-.nav__burger span { width: 22px; height: 2.5px; border-radius: 2px; background: var(--text-primary); transition: .25s var(--ease); }
-.nav__burger.is-open span:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+.nav__burger:hover { background: var(--light-green); border-color: var(--primary); }
+.nav__burger span {
+  width: 18px; height: 2px; border-radius: 2px; background: var(--text-primary);
+  transition: transform .25s var(--ease), opacity .2s var(--ease);
+}
+/* Bars sit at 0 / 7 / 14px (2px tall, 5px gap), so the outer two travel 7px to
+   meet in the middle and cross. Keep in step with the height/gap above. */
+.nav__burger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav__burger.is-open span:nth-child(2) { opacity: 0; }
-.nav__burger.is-open span:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
+.nav__burger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 /* ==========================================================================
    DECORATIVE LAYER — blurred organic blobs, paw glyphs, dotted grids, waves.
@@ -842,9 +852,6 @@ em { font-style: italic; }
 }
 .join__photo { position: relative; }
 .join__photo img { border-radius: 20px; width: 100%; height: 290px; object-fit: cover; background: var(--surface-bg); }
-/* App-screen preview: anchor the crop to the top so the screen's own header and
-   tabs stay visible instead of centring on the middle of a tall phone capture. */
-.join__photo--app img { object-position: center top; border: 1px solid var(--border-color); }
 .chip--earn { position: absolute; bottom: 16px; left: 16px; }
 
 /* ==========================================================================
@@ -944,15 +951,18 @@ em { font-style: italic; }
 /* Pet pair above the closing pitch — transparent cutout, so it sits on the green
    gradient without a plate behind it. Portrait crop, so kept narrow to stay in
    proportion with the heading below it. */
-/* Pulled out of the flow and anchored to the right edge, so it reads as part of
-   the card's background and costs the section no vertical height. It sits behind
-   the copy (z-index 0 against the positioned content), fades down as the card
-   narrows, and scales with the viewport so it never crowds the centred text. */
+/* Anchored to the bottom-right of the card so it costs the section no vertical
+   height, balancing the paw watermark on the left. max-height keeps it inside
+   the card whatever the card's own height turns out to be, and it is hidden
+   outright below 900px rather than faded — a barely-visible photo behind centred
+   text reads as a broken image, not as a watermark. */
 .cta-final__pets {
-  position: absolute; right: 1.5%; bottom: 0; margin: 0;
-  width: clamp(128px, 17vw, 215px); height: auto;
+  position: absolute; right: 20px; bottom: 0; margin: 0;
+  width: clamp(140px, 16vw, 190px); height: auto; max-height: 82%;
+  object-fit: contain; object-position: bottom right;
   pointer-events: none; z-index: 0;
 }
+@media (max-width: 900px) { .cta-final__pets { display: none; } }
 .cta-final__card h2 {
   font-family: var(--font-display); color: #fff; font-weight: 600;
   font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.15;
@@ -1162,13 +1172,11 @@ em { font-style: italic; }
    FOOTER
    ========================================================================== */
 .footer { background: var(--primary-dark); color: rgba(255,255,255,0.72); padding: 38px 0 18px; }
-/* Brand block plus link columns. The --wide variant adds a fourth column for
-   Contact; pages that render three columns keep the base rule unchanged. */
+/* Brand block plus the Company and Legal link columns. */
 .footer__top {
   display: grid; grid-template-columns: 1.9fr 1fr 1fr; gap: 22px 44px;
   padding-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,0.13);
 }
-.footer__top--wide { grid-template-columns: 1.7fr 1fr 1fr 1.1fr; }
 .footer__logo { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
 .footer__logo > span { display: flex; flex-direction: column; line-height: 1; font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; }
 .footer__logo em {
@@ -1272,10 +1280,6 @@ em { font-style: italic; }
   .join__grid, .contact__grid { grid-template-columns: 1fr; gap: 36px; }
   .values { grid-template-columns: 1fr; }
   .footer__top { grid-template-columns: 1.6fr auto auto; gap: 32px 40px; }
-  /* Brand spans the full width, the three link columns share the row beneath it,
-     so the Contact column never gets squeezed to an unreadable width. */
-  .footer__top--wide { grid-template-columns: repeat(3, 1fr); gap: 34px 40px; }
-  .footer__top--wide .footer__brand { grid-column: 1 / -1; }
   .footer__legalbar { grid-template-columns: 1.6fr auto; }
   .bento {
     grid-template-columns: 1fr 1fr;
@@ -1295,6 +1299,10 @@ em { font-style: italic; }
   }
   .nav__links.is-open { opacity: 1; pointer-events: auto; z-index: 99; }
   .nav__links.is-open a { font-size: 21px; }
+  /* The open overlay is a fixed, full-viewport layer, so the logo and the burger
+     have to be lifted above it — otherwise it paints over the burger and there is
+     no way left to close the menu. */
+  .nav__logo, .nav__actions { position: relative; z-index: 100; }
   .nav__burger { display: flex; }
   .nav__phone span { display: none; }
   .nav__phone { padding: 9px; background: var(--surface-bg); border-radius: 50%; }
@@ -1325,10 +1333,7 @@ em { font-style: italic; }
   .legal__layout { grid-template-columns: 1fr; gap: 30px; }
   .legal__toc { position: static; }
   .cta-final__card { padding: 36px 22px; }
-  /* Card is too narrow now for the pets to sit beside the copy, so they drop
-     behind it as a soft watermark rather than colliding with the text. */
-  .cta-final__pets { right: -14px; width: 150px; opacity: .34; }
-  .footer__top, .footer__top--wide { grid-template-columns: 1fr; }
+  .footer__top { grid-template-columns: 1fr; }
   .footer__legalbar { grid-template-columns: 1fr; padding: 18px 18px; }
 }
 
@@ -1340,7 +1345,6 @@ em { font-style: italic; }
   .cta-final__buttons { flex-direction: column; align-items: stretch; }
   .cta-final__actions { flex-direction: column; align-items: stretch; }
   .cta-final__card { padding: 32px 18px; border-radius: 22px; }
-  .cta-final__pets { right: -20px; width: 116px; opacity: .26; }
   .cta-final__paw { font-size: 104px; left: -14px; bottom: -26px; }
 }
 
