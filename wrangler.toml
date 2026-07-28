@@ -20,10 +20,13 @@ compatibility_date = "2026-07-26"
 
 [assets]
 directory = "./dist"
-# Every route is a real file (index.html, careers.html, ...). There is no SPA
-# router and no 404.html, so unknown paths should just 404 rather than be
-# rewritten to a page that does not exist.
-not_found_handling = "none"
+# Every route is a real file (index.html, careers.html, ...) — there is no SPA
+# router, so a missing path is a genuine 404 and must keep returning 404, not
+# be rewritten to some other page. "404-page" serves dist/404.html with the
+# status intact, which is the only variant that is both useful to a visitor
+# and honest to a crawler. Do NOT use "single-page-application": it answers 200
+# for every unknown URL, which invites Google to index infinite soft-404s.
+not_found_handling = "404-page"
 # DO NOT set html_handling = "none". That was tried and reverted: it disables
 # ALL url rewriting, which also removes the implicit "/" -> "/index.html"
 # mapping every static host needs — it took the homepage itself to a 404

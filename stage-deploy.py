@@ -21,6 +21,7 @@ DIST = ROOT / "dist"
 # Everything the public site needs, and nothing else.
 FILES = [
     "index.html", "careers.html", "terms.html", "privacy.html", "disclaimer.html",
+    "404.html",
     "_headers", "_redirects", "robots.txt", "sitemap.xml",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
@@ -30,7 +31,12 @@ TREES = ["css", "js", "pet-services"]
 # petlife/ is copied selectively: the served artwork only. The masters are the
 # source of record (1.5 MB) and have no business being downloaded by visitors.
 # Anything referenced from the HTML must be listed here or it 404s in production.
-BRAND = ["logo.png", "pets-photo.webp"]
+#
+# pets-photo.webp was dropped: nothing in the HTML, CSS or JS references it any
+# more, so it was 159 KB shipped to every deploy for nothing. Check with
+#     grep -rn "<name>" --include=*.html --include=*.css --include=*.js Website/
+# before adding anything back here.
+BRAND = ["logo.png"]
 
 
 def main() -> int:

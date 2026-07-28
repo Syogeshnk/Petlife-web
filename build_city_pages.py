@@ -380,7 +380,7 @@ def footer(cities):
       <div class="footer__top">
         <div class="footer__brand">
           <div class="footer__logo">
-            <img src="/petlife/logo.png" alt="" width="46" height="46">
+            <img src="/petlife/logo.png" alt="" width="46" height="46" loading="lazy" decoding="async">
             <span>Petlife<em>Care · Love · Trust</em></span>
           </div>
           <p>A community platform connecting Pet Parents<br>directly with verified Pet Buddies.<br>0% commission, always.</p>
@@ -539,6 +539,10 @@ def render(city, all_cities):
   <meta property="og:url" content="{url}">
   <meta property="og:image" content="https://petlifeindia.co/petlife/logo.png">
   <meta property="og:locale" content="en_IN">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pet Services in {name} | Petlife">
+  <meta name="twitter:description" content="{city['ogdesc']}">
+  <meta name="twitter:image" content="https://petlifeindia.co/petlife/logo.png">
   <meta name="theme-color" content="#1F6B3C">
   <link rel="icon" type="image/png" href="/petlife/logo.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
