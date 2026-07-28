@@ -23,7 +23,10 @@ FILES = [
     "index.html", "careers.html", "terms.html", "privacy.html", "disclaimer.html",
     "_headers", "_redirects", "robots.txt", "sitemap.xml",
 ]
-TREES = ["css", "js"]
+# pet-services/ holds the city landing pages. It is a tree rather than named
+# files so a new city is one file drop, with no risk of the page shipping to
+# git but silently 404ing in production because this list was not updated.
+TREES = ["css", "js", "pet-services"]
 # petlife/ is copied selectively: the served artwork only. The masters are the
 # source of record (1.5 MB) and have no business being downloaded by visitors.
 # Anything referenced from the HTML must be listed here or it 404s in production.

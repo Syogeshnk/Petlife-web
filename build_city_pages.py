@@ -1,0 +1,713 @@
+#!/usr/bin/env python3
+"""One-off generator for the /pet-services/<city> pages.
+
+The structure is shared (as it is on any site); the copy is not. Every service
+paragraph, FAQ answer and neighbourhood blurb below is written for that city
+specifically. A generator that varied only the city name would produce exactly
+the doorway pages we are trying to avoid.
+
+After running this, the generated HTML is the source of record - edit the pages,
+not this script. It exists so the three launch pages start consistent.
+
+    python build_city_pages.py
+"""
+import html
+import json
+import pathlib
+
+OUT = pathlib.Path(__file__).resolve().parent / "Website" / "pet-services"
+
+ORG = {
+    "@type": "Organization",
+    "name": "Petlife",
+    "url": "https://petlifeindia.co",
+    "logo": "https://petlifeindia.co/petlife/logo.png",
+    "telephone": "+91-84510-72388",
+    "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Plot No. 97, Ulwe",
+        "addressLocality": "Navi Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "410206",
+        "addressCountry": "IN",
+    },
+}
+
+INSTAGRAM_SVG = (
+    '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">'
+    '<path d="M12 2.2c3.2 0 3.6 0 4.9.07 1.2.06 1.8.25 2.2.42.6.23 1 .5 1.4.94.44.43.71.84.94 1.4'
+    '.17.44.36 1.05.42 2.2.06 1.3.07 1.7.07 4.9s0 3.6-.07 4.9c-.06 1.2-.25 1.8-.42 2.2-.23.6-.5 1'
+    '-.94 1.4-.43.44-.84.71-1.4.94-.44.17-1.05.36-2.2.42-1.3.06-1.7.07-4.9.07s-3.6 0-4.9-.07c-1.2'
+    '-.06-1.8-.25-2.2-.42-.6-.23-1-.5-1.4-.94-.44-.43-.71-.84-.94-1.4-.17-.44-.36-1.05-.42-2.2C2.2'
+    ' 15.6 2.2 15.2 2.2 12s0-3.6.07-4.9c.06-1.2.25-1.8.42-2.2.23-.6.5-1 .94-1.4.43-.44.84-.71 1.4'
+    '-.94.44-.17 1.05-.36 2.2-.42C8.4 2.2 8.8 2.2 12 2.2Zm0 1.98c-3.15 0-3.5.01-4.73.07-.94.04-1.4'
+    '.2-1.72.32-.35.14-.6.3-.86.56-.26.26-.42.5-.56.86-.13.33-.28.78-.32 1.72-.06 1.23-.07 1.58-.07'
+    ' 4.73s.01 3.5.07 4.73c.4.94.2 1.4.32 1.72.14.35.3.6.56.86.26.26.5.42.86.56.33.13.78.28 1.72.32'
+    ' 1.23.06 1.58.07 4.73.07s3.5-.01 4.73-.07c.94-.04 1.4-.2 1.72-.32.35-.14.6-.3.86-.56.26-.26.42'
+    '-.5.56-.86.13-.33.28-.78.32-1.72.06-1.23.07-1.58.07-4.73s-.01-3.5-.07-4.73c-.04-.94-.2-1.4-.32'
+    '-1.72a2.3 2.3 0 0 0-.56-.86 2.3 2.3 0 0 0-.86-.56c-.33-.13-.78-.28-1.72-.32-1.23-.06-1.58-.07'
+    '-4.73-.07Zm0 3.37a4.45 4.45 0 1 1 0 8.9 4.45 4.45 0 0 1 0-8.9Zm0 7.34a2.89 2.89 0 1 0 0-5.78'
+    ' 2.89 2.89 0 0 0 0 5.78Zm5.67-7.54a1.04 1.04 0 1 1-2.08 0 1.04 1.04 0 0 1 2.08 0Z"/></svg>'
+)
+
+WAVE = (
+    '<svg class="deco__wave" viewBox="0 0 1440 190" preserveAspectRatio="none" fill="currentColor" '
+    'aria-hidden="true"><path d="M0 96c140-46 286-64 430-40 132 22 244 74 380 82 148 9 292-33 428-79'
+    ' 76-26 148-46 202-53v184H0Z"/></svg>'
+)
+
+CITIES = [
+    {
+        "slug": "mumbai",
+        "name": "Mumbai",
+        "state": "Maharashtra",
+        "buddies": 80,
+        "bookings": 1400,
+        "title": "Pet Services in Mumbai | Dog Walking, Boarding, Vet &amp; Grooming — Petlife",
+        "meta": "80 verified Pet Buddies across Mumbai and Navi Mumbai for dog walking, pet boarding, veterinary care and grooming. Every Pet Buddy is checked against government ID. 0% commission — pay your Pet Buddy directly.",
+        "ogdesc": "80 verified Pet Buddies across Mumbai and Navi Mumbai for dog walking, boarding, vet visits and grooming. Government-ID checked, 0% commission.",
+        "h1": 'A Pet Buddy in your <em>own</em> building.',
+        "herosub": (
+            "Dog walking, boarding, vet visits and grooming across Mumbai and Navi Mumbai, "
+            "from <strong>80 verified Pet Buddies</strong> we have checked against government "
+            "ID. You pay them directly, and Petlife takes 0% of it."
+        ),
+        "areas_intro": (
+            "Petlife grew out of Navi Mumbai, which is still where the community is densest. "
+            "Rather than claim the whole city at once, here is where you will actually find a "
+            "Pet Buddy close enough to walk to you."
+        ),
+        "areas": [
+            ("Ulwe", 8, "Where Petlife started, and still our densest single cluster of Pet Buddies."),
+            ("Pushpak Nagar", 5, "Growing quickly, with good cover for morning and evening walks."),
+            ("Navi Mumbai (wider)", 20, "Vashi, Kharghar and the surrounding nodes, expanding node by node."),
+        ],
+        "nearby": None,
+        "services_title": 'Four things Mumbai pets <em>need</em>.',
+        "services": [
+            ("🦮", "Dog walking in Mumbai", [
+                "Mumbai walking is really two problems: finding someone reliable before 9am, and "
+                "finding someone who will still turn up in the monsoon. Pet Buddies set their own "
+                "hours and service area, so you can see who is genuinely free at 6:30am in Ulwe "
+                "rather than hoping a call centre finds someone.",
+                "Walks are agreed directly with your Pet Buddy: how long, how often, and what it "
+                "costs. Petlife takes nothing from it.",
+            ], None),
+            ("🏠", "Pet boarding in Mumbai", [
+                "Home-style boarding for Diwali travel, work trips and the long weekends when a "
+                "kennel feels like too much. You meet the Pet Buddy and see the home your pet will "
+                "actually stay in before you commit to anything.",
+                "For high-rise living this matters more than it sounds: you are looking for a home "
+                "your dog can settle in, not a cage in a back room.",
+            ], None),
+            ("🩺", "Veterinary care in Mumbai", [
+                "Clinic visits and house calls from vets near you, including who is open on a "
+                "Sunday. Vets on Petlife can add professional credentials, which we verify "
+                "separately from their identity check.",
+                "Across Navi Mumbai in particular, a vet on your own node beats a better-known one "
+                "an hour away through traffic.",
+            ], "Petlife is not a veterinary provider and nothing here is veterinary advice. "
+               "In an emergency, contact a vet directly."),
+            ("✂️", "Pet grooming in Mumbai", [
+                "Baths, trims and nail clips, which matter more than most Mumbai Pet Parents expect "
+                "once the humidity sets in and coats start matting.",
+                "Groomers who are used to anxious pets, and who will tell you honestly what your "
+                "dog's coat actually needs rather than selling you a package.",
+            ], None),
+        ],
+        "faqs": [
+            ("Which areas of Mumbai does Petlife cover?",
+             'We are strongest across <strong>Navi Mumbai</strong>, with 8 Pet Buddies in Ulwe, '
+             '5 in Pushpak Nagar and 20 across the wider Navi Mumbai nodes, out of 80 across '
+             'Mumbai as a whole. Open the app and it shows you the verified Pet Buddies closest '
+             'to your address.',
+             "We are strongest across Navi Mumbai, with 8 Pet Buddies in Ulwe, 5 in Pushpak Nagar "
+             "and 20 across the wider Navi Mumbai nodes, out of 80 across Mumbai as a whole. Open "
+             "the app and it shows you the verified Pet Buddies closest to your address."),
+            ("How many Pet Buddies are there in Mumbai?",
+             'There are <strong>80 verified Pet Buddies</strong> across Mumbai, who have completed '
+             '1,400 bookings between them. Every one of them was checked against a government '
+             'identity document before their profile went live.',
+             "There are 80 verified Pet Buddies across Mumbai, who have completed 1,400 bookings "
+             "between them. Every one was checked against a government identity document before "
+             "their profile went live."),
+            ("What does Petlife charge in Mumbai?",
+             'Nothing. <strong>0% commission</strong>, no booking fee, no platform fee, no surge '
+             'pricing. You agree a price with your Pet Buddy and pay them directly, in full.',
+             "Nothing. 0% commission, no booking fee, no platform fee, no surge pricing. You agree "
+             "a price with your Pet Buddy and pay them directly, in full."),
+            ("Can I find a dog walker during the monsoon?",
+             'Yes. Pet Buddies set their own working hours and service area, so you can see who is '
+             'genuinely available near you and agree timings that work around the rain, rather than '
+             'being assigned someone who then cancels.',
+             "Yes. Pet Buddies set their own working hours and service area, so you can see who is "
+             "genuinely available near you and agree timings that work around the rain, rather than "
+             "being assigned someone who then cancels."),
+        ],
+        "cta_h2": "Are you the Pet Buddy in your building?",
+        "cta_p": ("If you already walk, board, groom or treat pets around Mumbai, list yourself "
+                  "free. Verification takes a government ID and a few minutes, and you keep 100% "
+                  "of what you charge."),
+    },
+    {
+        "slug": "bangalore",
+        "name": "Bengaluru",
+        "state": "Karnataka",
+        "buddies": 65,
+        "bookings": 1800,
+        "title": "Pet Services in Bangalore | Dog Walking, Boarding, Vet &amp; Grooming — Petlife",
+        "meta": "65 verified Pet Buddies across Bengaluru, including Koramangala and Indiranagar, for dog walking, pet boarding, veterinary care and grooming. Government-ID checked. 0% commission.",
+        "ogdesc": "65 verified Pet Buddies across Bengaluru for dog walking, boarding, vet visits and grooming. Government-ID checked, 0% commission.",
+        "h1": 'A Pet Buddy on your <em>own</em> side of town.',
+        "herosub": (
+            "Dog walking, boarding, vet visits and grooming across Bengaluru, from "
+            "<strong>65 verified Pet Buddies</strong> we have checked against government ID. "
+            "You pay them directly, and Petlife takes 0% of it."
+        ),
+        "areas_intro": (
+            "Bengaluru traffic decides everything. A brilliant Pet Buddy on the other side of "
+            "the city is no use to you at 7am, so we have grown cluster by cluster instead of "
+            "claiming the whole map."
+        ),
+        "areas": [
+            ("Koramangala", 14, "Our densest cluster in the city, and the fastest to get a same-day walk."),
+            ("Indiranagar", None, "Solid cover for walking and grooming, and growing month on month."),
+            ("Bengaluru (wider)", 65, "HSR, Whitefield and the surrounding neighbourhoods, filling in steadily."),
+        ],
+        "nearby": ("Mangaluru", 23, "Karnataka",
+                   "We also have 23 verified Pet Buddies in Mangaluru. It is a separate city "
+                   "roughly 350km from Bengaluru, not a Bengaluru neighbourhood, so it gets its "
+                   "own coverage rather than being folded into this page."),
+        "services_title": 'Four things Bengaluru pets <em>need</em>.',
+        "services": [
+            ("🦮", "Dog walking in Bengaluru", [
+                "Bengaluru has the best walking weather of any big Indian city, and the worst "
+                "commutes. The result is a lot of dogs who could be walked twice a day and are "
+                "walked once, because their person left at 8am and got back at 8pm.",
+                "Pet Buddies here set their own hours and service area, so you can find someone in "
+                "Koramangala who is free at exactly the hour you are not.",
+            ], None),
+            ("🏠", "Pet boarding in Bengaluru", [
+                "Home-style boarding for the long weekends this city takes seriously, and for the "
+                "trips home that turn into two weeks. You meet the Pet Buddy and see the home "
+                "first.",
+                "With 1,800 bookings completed in Bengaluru, most Pet Buddies here have a review "
+                "history you can actually read before deciding.",
+            ], None),
+            ("🩺", "Veterinary care in Bengaluru", [
+                "Clinic visits and house calls from vets near you. In a city where crossing town "
+                "can take ninety minutes, a good vet in your own neighbourhood is worth more than "
+                "a famous one in someone else's.",
+                "Vets can add professional credentials, which we verify separately from their "
+                "identity check.",
+            ], "Petlife is not a veterinary provider and nothing here is veterinary advice. "
+               "In an emergency, contact a vet directly."),
+            ("✂️", "Pet grooming in Bengaluru", [
+                "Baths, trims and nail clips, at a salon or at home depending on which Pet Buddies "
+                "are near you.",
+                "Bengaluru has a lot of indies and rescues, and a lot of coats that were never bred "
+                "for a salon routine. Groomers here are used to that, and to pets who need a slow "
+                "first session.",
+            ], None),
+        ],
+        "faqs": [
+            ("Which areas of Bengaluru does Petlife cover?",
+             'We are strongest in <strong>Koramangala</strong>, with 14 Pet Buddies, and have solid '
+             'cover in Indiranagar, out of 65 across Bengaluru as a whole. HSR, Whitefield and the '
+             'surrounding neighbourhoods are filling in steadily.',
+             "We are strongest in Koramangala, with 14 Pet Buddies, and have solid cover in "
+             "Indiranagar, out of 65 across Bengaluru as a whole. HSR, Whitefield and the "
+             "surrounding neighbourhoods are filling in steadily."),
+            ("How many Pet Buddies are there in Bengaluru?",
+             'There are <strong>65 verified Pet Buddies</strong> across Bengaluru, who have '
+             'completed 1,800 bookings between them, the most of any city we operate in. Every one '
+             'was checked against a government identity document before their profile went live.',
+             "There are 65 verified Pet Buddies across Bengaluru, who have completed 1,800 bookings "
+             "between them, the most of any city we operate in. Every one was checked against a "
+             "government identity document before their profile went live."),
+            ("Do you cover Mangaluru?",
+             'Yes, separately. We have <strong>23 verified Pet Buddies in Mangaluru</strong>. It is '
+             'its own city about 350km away, so it is not covered by Bengaluru Pet Buddies.',
+             "Yes, separately. We have 23 verified Pet Buddies in Mangaluru. It is its own city "
+             "about 350km away, so it is not covered by Bengaluru Pet Buddies."),
+            ("What does Petlife charge in Bengaluru?",
+             'Nothing. <strong>0% commission</strong>, no booking fee, no platform fee, no surge '
+             'pricing. You agree a price with your Pet Buddy and pay them directly, in full.',
+             "Nothing. 0% commission, no booking fee, no platform fee, no surge pricing. You agree "
+             "a price with your Pet Buddy and pay them directly, in full."),
+        ],
+        "cta_h2": "Are you the Pet Buddy on your street?",
+        "cta_p": ("If you already walk, board, groom or treat pets around Bengaluru, list yourself "
+                  "free. Verification takes a government ID and a few minutes, and you keep 100% "
+                  "of what you charge."),
+    },
+    {
+        "slug": "pune",
+        "name": "Pune",
+        "state": "Maharashtra",
+        "buddies": 90,
+        "bookings": 1100,
+        "title": "Pet Services in Pune | Dog Walking, Boarding, Vet &amp; Grooming — Petlife",
+        "meta": "90 verified Pet Buddies across Pune and Pimpri-Chinchwad for dog walking, pet boarding, veterinary care and grooming. Every Pet Buddy is checked against government ID. 0% commission.",
+        "ogdesc": "90 verified Pet Buddies across Pune and Pimpri-Chinchwad for dog walking, boarding, vet visits and grooming. Government-ID checked, 0% commission.",
+        "h1": 'A Pet Buddy in your <em>own</em> society.',
+        "herosub": (
+            "Dog walking, boarding, vet visits and grooming across Pune and Pimpri-Chinchwad, "
+            "from <strong>90 verified Pet Buddies</strong> we have checked against government "
+            "ID. You pay them directly, and Petlife takes 0% of it."
+        ),
+        "areas_intro": (
+            "Pune is our largest Pet Buddy community, and the one that grew most through societies "
+            "telling their neighbours. Here is where the cover is strongest today."
+        ),
+        "areas": [
+            ("Pimpri-Chinchwad", 26, "Strong cover across the industrial and IT belt, including early-morning walks."),
+            ("Pune (wider)", 90, "Kothrud, Baner, Viman Nagar and the surrounding areas, filling in society by society."),
+        ],
+        "nearby": ("Nashik", 29, "Maharashtra",
+                   "We also have 29 verified Pet Buddies in Nashik. It is a separate city about "
+                   "165km from Pune rather than a Pune suburb, so it is listed on its own terms "
+                   "and not counted in the Pune figures above."),
+        "services_title": 'Four things Pune pets <em>need</em>.',
+        "services": [
+            ("🦮", "Dog walking in Pune", [
+                "Pune runs early. A lot of walking here happens before 7am, which is exactly when "
+                "it is hardest to find someone reliable if you are not already part of a society "
+                "WhatsApp group.",
+                "Pet Buddies set their own hours and service area, so a walker two buildings away "
+                "in Pimpri-Chinchwad shows up as available rather than staying invisible.",
+            ], None),
+            ("🏠", "Pet boarding in Pune", [
+                "Home-style boarding for the trips to Mumbai and the long Diwali breaks, in homes "
+                "you can see before you commit.",
+                "In a city of large societies, boarding within your own complex or the next one is "
+                "often possible, which is far less disruptive for an anxious dog.",
+            ], None),
+            ("🩺", "Veterinary care in Pune", [
+                "Clinic visits and house calls from vets near you, including who is open on a "
+                "Sunday.",
+                "Vets on Petlife can add professional credentials, which we verify separately from "
+                "their identity check.",
+            ], "Petlife is not a veterinary provider and nothing here is veterinary advice. "
+               "In an emergency, contact a vet directly."),
+            ("✂️", "Pet grooming in Pune", [
+                "Baths, trims and nail clips, at home or at a salon depending on which Pet Buddies "
+                "are near you.",
+                "Pune's dry winters and hot summers are hard on coats and paws in different ways, "
+                "and groomers here will tell you which one you are actually dealing with.",
+            ], None),
+        ],
+        "faqs": [
+            ("Which areas of Pune does Petlife cover?",
+             'We have <strong>90 verified Pet Buddies</strong> across Pune, including 26 in '
+             '<strong>Pimpri-Chinchwad</strong>. Kothrud, Baner, Viman Nagar and the surrounding '
+             'areas are filling in society by society.',
+             "We have 90 verified Pet Buddies across Pune, including 26 in Pimpri-Chinchwad. "
+             "Kothrud, Baner, Viman Nagar and the surrounding areas are filling in society by "
+             "society."),
+            ("How many Pet Buddies are there in Pune?",
+             'There are <strong>90 verified Pet Buddies</strong> in Pune, our largest community in '
+             'any single city, who have completed 1,100 bookings between them. Every one was '
+             'checked against a government identity document before their profile went live.',
+             "There are 90 verified Pet Buddies in Pune, our largest community in any single city, "
+             "who have completed 1,100 bookings between them. Every one was checked against a "
+             "government identity document before their profile went live."),
+            ("Do you cover Nashik?",
+             'Yes, separately. We have <strong>29 verified Pet Buddies in Nashik</strong>. It is a '
+             'separate city about 165km from Pune, so it is not covered by Pune Pet Buddies.',
+             "Yes, separately. We have 29 verified Pet Buddies in Nashik. It is a separate city "
+             "about 165km from Pune, so it is not covered by Pune Pet Buddies."),
+            ("What does Petlife charge in Pune?",
+             'Nothing. <strong>0% commission</strong>, no booking fee, no platform fee, no surge '
+             'pricing. You agree a price with your Pet Buddy and pay them directly, in full.',
+             "Nothing. 0% commission, no booking fee, no platform fee, no surge pricing. You agree "
+             "a price with your Pet Buddy and pay them directly, in full."),
+        ],
+        "cta_h2": "Are you the Pet Buddy in your society?",
+        "cta_p": ("If you already walk, board, groom or treat pets around Pune, list yourself free. "
+                  "Verification takes a government ID and a few minutes, and you keep 100% of what "
+                  "you charge."),
+    },
+]
+
+SHARED_FAQ = (
+    "Is Petlife responsible for the service my Pet Buddy provides?",
+    'No. Every Pet Buddy is an <strong>independent contractor</strong> running their own business, '
+    'and every booking is a direct agreement between you and them. Petlife is the platform that '
+    'introduces you. This is set out in full in our <a href="/disclaimer">Platform Disclaimer</a> '
+    'and <a href="/terms">Terms &amp; Conditions</a>.',
+    "No. Every Pet Buddy is an independent contractor running their own business, and every "
+    "booking is a direct agreement between you and them. Petlife is the platform that introduces "
+    "you. This is set out in full in our Platform Disclaimer and Terms & Conditions.",
+)
+
+
+def nav(active_slug):
+    return f"""  <header class="nav is-solid" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Petlife home">
+        <img src="/petlife/logo.png" alt="" width="42" height="42">
+        <span class="nav__logo-text">Petlife</span>
+      </a>
+      <nav class="nav__links" id="navLinks" aria-label="Main">
+        <a href="/#services">Services</a>
+        <a href="/#how">How it works</a>
+        <a href="/#why">Why Petlife</a>
+        <a href="/#join">Join us</a>
+        <a href="/careers">Careers</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <div class="nav__actions">
+        <a href="/#join" class="btn btn--primary btn--sm">Join as Pet Buddy</a>
+        <button type="button" class="nav__burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>"""
+
+
+def footer(cities):
+    # Every city, including the current one: a site-wide footer block is the
+    # cheapest way to give three new pages an internal link from every page,
+    # and self-links in a nav block are normal.
+    links = "\n".join(
+        f'          <a href="/pet-services/{c["slug"]}">{c["name"]}</a>'
+        for c in cities
+    )
+    return f"""  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <img src="/petlife/logo.png" alt="" width="46" height="46">
+            <span>Petlife<em>Care · Love · Trust</em></span>
+          </div>
+          <p>A community platform connecting Pet Parents<br>directly with verified Pet Buddies.<br>0% commission, always.</p>
+          <div class="footer__social">
+            <a href="https://www.instagram.com/petlife_india" target="_blank" rel="noopener noreferrer" aria-label="Petlife on Instagram">
+              {INSTAGRAM_SVG}
+              <span>@petlife_india</span>
+            </a>
+          </div>
+        </div>
+        <nav class="footer__col" aria-label="Company">
+          <h4>Company</h4>
+          <a href="/#why">Why Petlife</a>
+          <a href="/#join">Become a Pet Buddy</a>
+          <a href="/careers">Careers</a>
+          <a href="/#contact">Contact us</a>
+        </nav>
+        <nav class="footer__col" aria-label="Cities">
+          <h4>Cities</h4>
+{links}
+        </nav>
+        <nav class="footer__col" aria-label="Legal">
+          <h4>Legal</h4>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="/privacy">Privacy Policy</a>
+        </nav>
+      </div>
+      <p class="footer__script" aria-hidden="true">One platform. Many services. Unlimited love.</p>
+
+      <div class="footer__bottom">
+        <p>&copy; 2026 Petlife India. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>"""
+
+
+def render(city, all_cities):
+    others = [c for c in all_cities if c["slug"] != city["slug"]]
+    slug, name = city["slug"], city["name"]
+    url = f"https://petlifeindia.co/pet-services/{slug}"
+
+    breadcrumb = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            {"@type": "ListItem", "position": 1, "name": "Petlife", "item": "https://petlifeindia.co/"},
+            {"@type": "ListItem", "position": 2, "name": f"Pet services in {name}", "item": url},
+        ],
+    }
+    service = {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": f"Pet services in {name}",
+        "serviceType": ["Dog Walking", "Pet Boarding", "Veterinary Care", "Pet Grooming"],
+        "description": (
+            f"Petlife connects Pet Parents in {name} with {city['buddies']} verified, "
+            f"government-ID checked Pet Buddies for dog walking, pet boarding, veterinary care "
+            f"and grooming, at 0% commission."
+        ),
+        "provider": ORG,
+        "areaServed": {
+            "@type": "City",
+            "name": name,
+            "containedInPlace": {"@type": "State", "name": city["state"]},
+        },
+        "offers": {
+            "@type": "Offer",
+            "description": (
+                "Petlife charges Pet Parents no booking fee, platform fee or commission. "
+                "Payment is settled directly with the Pet Buddy."
+            ),
+            "price": "0",
+            "priceCurrency": "INR",
+        },
+    }
+    faqs = list(city["faqs"]) + [SHARED_FAQ]
+    faqpage = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": q,
+                "acceptedAnswer": {"@type": "Answer", "text": plain},
+            }
+            for q, _rich, plain in faqs
+        ],
+    }
+
+    def ld(obj):
+        body = json.dumps(obj, indent=2, ensure_ascii=False)
+        body = "\n".join("  " + l for l in body.split("\n"))
+        return f'  <script type="application/ld+json">\n{body}\n  </script>'
+
+    # --- areas -----------------------------------------------------------
+    area_items = []
+    for aname, count, blurb in city["areas"]:
+        badge = f'<span class="areas__count">{count} Pet Buddies</span>' if count else ""
+        area_items.append(
+            f"          <li><strong>{aname}</strong>{badge}<span>{blurb}</span></li>"
+        )
+    areas_html = "\n".join(area_items)
+
+    nearby_html = ""
+    if city["nearby"]:
+        nname, ncount, nstate, nblurb = city["nearby"]
+        nearby_html = f"""
+        <div class="areas__nearby reveal">
+          <h3>Also nearby: {nname}</h3>
+          <p>{nblurb}</p>
+        </div>"""
+
+    # --- services --------------------------------------------------------
+    svc = []
+    for icon, title, paras, note in city["services"]:
+        ps = "\n".join(f"            <p>{p}</p>" for p in paras)
+        if note:
+            ps += f'\n            <p class="local-service__note">{note}</p>'
+        svc.append(f"""          <article class="local-service reveal">
+            <span class="service__icon" aria-hidden="true">{icon}</span>
+            <h3>{title}</h3>
+{ps}
+          </article>""")
+    services_html = "\n\n".join(svc)
+
+    # --- faq -------------------------------------------------------------
+    fq = []
+    for i, (q, rich, _plain) in enumerate(faqs):
+        openattr = " open" if i == 0 else ""
+        fq.append(f"""          <details class="faq__item"{openattr}>
+            <summary>{q}<span class="faq__chev">›</span></summary>
+            <p>{rich}</p>
+          </details>""")
+    faq_html = "\n".join(fq)
+
+    # --- sibling city links ---------------------------------------------
+    sib = "\n".join(
+        f'            <a class="citylink" href="/pet-services/{c["slug"]}">'
+        f'<strong>{c["name"]}</strong><span>{c["buddies"]} verified Pet Buddies</span></a>'
+        for c in others
+    )
+
+    return f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{city['title']}</title>
+  <meta name="description" content="{city['meta']}">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="{url}">
+  <meta property="og:site_name" content="Petlife India">
+  <meta property="og:title" content="Pet Services in {name} | Petlife">
+  <meta property="og:description" content="{city['ogdesc']}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{url}">
+  <meta property="og:image" content="https://petlifeindia.co/petlife/logo.png">
+  <meta property="og:locale" content="en_IN">
+  <meta name="theme-color" content="#1F6B3C">
+  <link rel="icon" type="image/png" href="/petlife/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Figtree:wght@400;500;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <!-- Breadcrumb: renders the Home > City trail in place of a raw URL. -->
+{ld(breadcrumb)}
+
+  <!-- Service, not LocalBusiness. Petlife does not perform pet care - it
+       introduces Pet Parents to independent Pet Buddies who do, which is what
+       Clause 1 of the Platform Disclaimer says. Structured data claiming
+       otherwise would contradict our own Terms. -->
+{ld(service)}
+
+{ld(faqpage)}
+</head>
+<body>
+
+  <!-- Figures below are real, per-city counts from the app's source of record.
+       Keep them in step with it: Clause 11.2 of our own Terms holds us to
+       accurate representations, and a stale city counter is a false claim. -->
+
+{nav(slug)}
+
+  <main>
+
+    <!-- ======================= PAGE HERO ======================= -->
+    <section class="page-hero">
+      {WAVE}
+      <div class="container container--mid">
+        <nav class="crumbs" aria-label="Breadcrumb">
+          <a href="/">Petlife</a> <span aria-hidden="true">›</span> <span>{name}</span>
+        </nav>
+        <p class="eyebrow reveal">Pet services in {name}</p>
+        <h1 class="page-hero__title reveal">{city['h1']}</h1>
+        <p class="page-hero__sub page-hero__sub--wide reveal">
+          {city['herosub']}
+        </p>
+        <div class="page-hero__ctas reveal">
+          <a href="/#join" class="btn btn--primary">Join as a Pet Buddy</a>
+          <a href="#services" class="btn btn--outline">See what's available</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= LOCAL NUMBERS ======================= -->
+    <section class="strip">
+      <div class="container">
+        <div class="strip__card reveal">
+          <div class="strip__stat"><span class="strip__num" data-count="{city['buddies']}">0</span><span class="strip__label">Verified Pet Buddies in {name}</span></div>
+          <div class="strip__stat"><span class="strip__num" data-count="{city['bookings']}">0</span><span class="strip__label">Bookings completed here</span></div>
+          <div class="strip__stat"><span class="strip__num strip__num--star" data-count="4.7" data-decimal="1">0</span><span class="strip__label">Average rating</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= NEIGHBOURHOODS ======================= -->
+    <section class="section section--tight">
+      <div class="container container--mid">
+        <p class="eyebrow reveal">Where we're strongest</p>
+        <h2 class="section__title section__title--wide reveal">{name}, neighbourhood by <em>neighbourhood</em>.</h2>
+        <p class="join__sub reveal">
+          {city['areas_intro']}
+        </p>
+
+        <ul class="areas reveal">
+{areas_html}
+        </ul>
+
+        <p class="areas__note reveal">
+          Not in one of these yet? Open the app anyway. It shows you every verified Pet Buddy
+          near your address, and new ones join every week.
+        </p>{nearby_html}
+      </div>
+    </section>
+
+    <!-- ======================= SERVICES ======================= -->
+    <section class="section section--surface" id="services">
+      <div class="container container--mid">
+        <p class="eyebrow reveal">What {name} books most</p>
+        <h2 class="section__title section__title--wide reveal">{city['services_title']}</h2>
+
+        <div class="local-services">
+{services_html}
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= WHY ======================= -->
+    <section class="section section--tight">
+      <div class="container container--mid">
+        <p class="eyebrow reveal">Why {name} Pet Parents use us</p>
+        <h2 class="section__title section__title--wide reveal">Verified neighbours, not a <em>listing</em>.</h2>
+
+        <div class="values">
+          <article class="value reveal">
+            <span class="value__word">Verified</span>
+            <p>Every Pet Buddy is checked against an official government ID before their profile goes live. No verified ID, no listing.</p>
+          </article>
+          <article class="value reveal">
+            <span class="value__word">Direct</span>
+            <p>You agree the price with your Pet Buddy and pay them in full. 0% commission, no booking fee, no surge pricing.</p>
+          </article>
+          <article class="value reveal">
+            <span class="value__word">Local</span>
+            <p>Someone from your own neighbourhood who can be there in ten minutes beats someone across the city who cannot.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= FAQ ======================= -->
+    <section class="section section--tight section--surface" id="faq">
+      <div class="container container--narrow">
+        <p class="eyebrow eyebrow--center reveal">{name} questions</p>
+        <h2 class="section__title section__title--center reveal">Before you <em>ask</em>…</h2>
+
+        <div class="faq reveal">
+{faq_html}
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= OTHER CITIES ======================= -->
+    <section class="section section--tight">
+      <div class="container container--mid">
+        <p class="eyebrow reveal">Elsewhere in India</p>
+        <h2 class="section__title section__title--wide reveal">We're in these cities <em>too</em>.</h2>
+        <div class="citylinks reveal">
+{sib}
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= CTA ======================= -->
+    <section class="section section--tight">
+      <div class="container container--mid">
+        <div class="local-cta reveal">
+          <h2>{city['cta_h2']}</h2>
+          <p>{city['cta_p']}</p>
+          <div class="page-hero__ctas">
+            <a href="/#join" class="btn btn--primary">Join as a Pet Buddy</a>
+            <a href="/#contact" class="btn btn--outline">Ask us something</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+{footer(all_cities)}
+
+  <script src="/js/config.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+</html>
+"""
+
+
+def main():
+    OUT.mkdir(parents=True, exist_ok=True)
+    for city in CITIES:
+        path = OUT / f"{city['slug']}.html"
+        path.write_text(render(city, CITIES), encoding="utf-8")
+        print("wrote", path.relative_to(OUT.parent.parent))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
