@@ -48,7 +48,8 @@
   <main>
 
     <!-- ======================= PAGE HERO ======================= -->
-    <section class="page-hero">
+    <section class="page-hero page-hero--photo">
+      <div class="page-hero__media" aria-hidden="true"></div>
       <svg class="deco__wave" viewBox="0 0 1440 190" preserveAspectRatio="none" fill="currentColor" aria-hidden="true"><path d="M0 96c140-46 286-64 430-40 132 22 244 74 380 82 148 9 292-33 428-79 76-26 148-46 202-53v184H0Z"/></svg>
       <div class="container container--mid">
         <p class="eyebrow reveal">Careers at Petlife</p>
@@ -70,7 +71,7 @@
     <section class="section section--tight">
       <div class="container container--mid">
         <p class="eyebrow reveal">How we work</p>
-        <h2 class="section__title reveal">Three things we <em>actually</em> mean.</h2>
+        <h2 class="section__title section__title--wide reveal">Three things we <em>actually</em> mean.</h2>
 
         <div class="values">
           <article class="value reveal">
@@ -94,8 +95,6 @@
       <div class="container container--mid">
         <p class="eyebrow reveal">Open roles</p>
         <h2 class="section__title reveal">Come build with us.</h2>
-        <p class="section__sub reveal">Eight open roles right now — five internships for students and early-career folks, plus <strong>three experienced positions</strong> on design and mobile engineering. Apply even if you're still studying. It takes about two minutes.</p>
-
         <div class="roles reveal">
           <article class="role">
             <div class="role__head">
@@ -222,19 +221,19 @@
           <form class="form-card reveal" id="careerForm" novalidate style="margin-top:40px">
             <div class="field">
               <label for="j-name">Full name <span aria-hidden="true">*</span></label>
-              <input type="text" id="j-name" name="name" autocomplete="name" required maxlength="120" placeholder="Priyanka Sharma">
+              <input type="text" id="j-name" name="name" autocomplete="name" required maxlength="80" placeholder="Priyanka Sharma">
               <p class="field__error" data-error-for="j-name"></p>
             </div>
 
             <div class="field-row">
               <div class="field">
                 <label for="j-phone">Phone number <span aria-hidden="true">*</span></label>
-                <input type="tel" id="j-phone" name="phone" autocomplete="tel" required maxlength="24" placeholder="98765 43210">
+                <input type="tel" id="j-phone" name="phone" autocomplete="tel" required maxlength="10" minlength="10" inputmode="numeric" pattern="[0-9]{10}" placeholder="9876543210">
                 <p class="field__error" data-error-for="j-phone"></p>
               </div>
               <div class="field">
                 <label for="j-email">Email address <span aria-hidden="true">*</span></label>
-                <input type="email" id="j-email" name="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
+                <input type="email" id="j-email" name="email" autocomplete="email" required maxlength="80" placeholder="you@example.com">
                 <p class="field__error" data-error-for="j-email"></p>
               </div>
             </div>

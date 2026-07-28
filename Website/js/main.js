@@ -201,9 +201,17 @@
 
   const MAX_RESUME_BYTES = 4 * 1024 * 1024;
   const MAX_COVER_WORDS = 200;
+  const MAX_NOTE_WORDS = 100;
+  const MAX_MESSAGE_WORDS = 100;
+  const MAX_NAME = 80;
+  const MAX_EMAIL = 80;
 
   const isEmail = (v) => /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v);
   const countWords = (v) => (v.trim() ? v.trim().split(/\s+/).length : 0);
+  // Exactly ten digits. A leading +91 or 0, and any spacing the visitor typed,
+  // is stripped first so a correct number is never rejected on formatting alone.
+  const phoneDigits = (v) =>
+    v.replace(/\D/g, "").replace(/^0+/, "").replace(/^91(?=\d{10}$)/, "");
 
   const setError = (input, message) => {
     const field = input.closest(".field");
@@ -226,15 +234,28 @@
   };
 
   const RULES = {
-    name: (v) => (v.trim().length < 2 ? "Enter your full name." : ""),
-    email: (v) => (!isEmail(v.trim()) ? "Enter a valid email address." : ""),
-    phone: (v) => (v.replace(/\D/g, "").length < 6 ? "Enter a valid phone number." : ""),
+    name: (v) => {
+      if (v.trim().length < 2) return "Enter your full name.";
+      if (v.trim().length > MAX_NAME) return "Please keep your name under " + MAX_NAME + " characters.";
+      return "";
+    },
+    email: (v) => {
+      if (v.trim().length > MAX_EMAIL) return "Please use an email address under " + MAX_EMAIL + " characters.";
+      if (!isEmail(v.trim())) return "Enter a valid email address, including @ and a domain.";
+      return "";
+    },
+    phone: (v) => (/^[0-9]{10}$/.test(phoneDigits(v)) ? "" : "Enter a 10-digit mobile number."),
     location: (v) => (v.trim().length < 2 ? "Enter your city or area." : ""),
     service: (v) => (!v ? "Choose the service you offer." : ""),
     position: (v) => (!v ? "Choose the role you're applying for." : ""),
     experience_level: (v) => (!v ? "Choose your experience level." : ""),
     experience_years: (v) => (v === "" ? "Choose your years of experience." : ""),
-    message: (v) => (v.trim().length < 5 ? "Tell us a little more so we can help." : ""),
+    message: (v) => {
+      if (v.trim().length < 5) return "Tell us a little more so we can help.";
+      if (countWords(v) > MAX_MESSAGE_WORDS) return "Please keep your message under " + MAX_MESSAGE_WORDS + " words.";
+      return "";
+    },
+    note: (v) => (countWords(v) > MAX_NOTE_WORDS ? "Please keep this under " + MAX_NOTE_WORDS + " words." : ""),
     cover_note: (v) => {
       if (v.trim().length < 10) return "Tell us a little about yourself.";
       if (countWords(v) > MAX_COVER_WORDS) return "Please keep this under " + MAX_COVER_WORDS + " words.";

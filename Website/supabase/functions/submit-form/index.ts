@@ -53,6 +53,25 @@ const EXPERIENCE_LABELS: Record<string, string> = {
 
 const MAX_RESUME_BYTES = 4 * 1024 * 1024;
 const MAX_COVER_WORDS = 200;
+const MAX_NOTE_WORDS = 100;
+const MAX_MESSAGE_WORDS = 100;
+const MAX_NAME = 80;
+const MAX_EMAIL = 80;
+
+// People legitimately write in more than once, so contact is rate-limited per
+// address rather than blocked outright the way registrations are.
+const CONTACT_COOLDOWN_MIN = 15;
+
+const words = (v: string) => (v.trim() ? v.trim().split(/\s+/).length : 0);
+
+// Exactly ten digits, nothing else. Anything the user typed as spacing or a
+// +91 prefix is stripped first so a valid number is not rejected on formatting.
+const digitsOnly = (v: string) => v.replace(/\D/g, "");
+const isPhone10 = (v: string) => /^[0-9]{10}$/.test(digitsOnly(v).replace(/^91(?=[0-9]{10}$)/, ""));
+const normPhone = (v: string) => digitsOnly(v).replace(/^91(?=[0-9]{10}$)/, "");
+
+// 23505 is Postgres' unique_violation — the one-registration-per-email indexes.
+const isDuplicate = (e: { code?: string } | null) => e?.code === "23505";
 
 const ALLOWED_ORIGINS = [
   "https://petlifeindia.co",
@@ -166,15 +185,35 @@ Deno.serve(async (req) => {
 
   // ------------------------------------------------------------- contact ---
   if (form === "contact") {
-    const name = str(body.name, 120);
-    const email = str(body.email, 160);
-    const phone = str(body.phone, 24);
+    const name = str(body.name, MAX_NAME);
+    const email = str(body.email, MAX_EMAIL).toLowerCase();
+    const phone = normPhone(str(body.phone, 24));
     const subject = str(body.subject, 160);
     const message = str(body.message, 4000);
 
     if (name.length < 2) return json({ error: "Enter your name." }, 400, origin);
     if (!isEmail(email)) return json({ error: "Enter a valid email address." }, 400, origin);
+    if (phone && !isPhone10(phone))
+      return json({ error: "Enter a 10-digit phone number." }, 400, origin);
     if (message.length < 5) return json({ error: "Tell us a little more in the message." }, 400, origin);
+    if (words(message) > MAX_MESSAGE_WORDS)
+      return json({ error: `Please keep your message under ${MAX_MESSAGE_WORDS} words.` }, 400, origin);
+
+    // Cooldown instead of a hard one-per-email rule: support enquiries are not
+    // registrations, but an open endpoint invites abuse.
+    const since = new Date(Date.now() - CONTACT_COOLDOWN_MIN * 60_000).toISOString();
+    const { data: recent } = await supabase
+      .from("website_contact_messages")
+      .select("id")
+      .eq("email", email)
+      .gte("created_at", since)
+      .limit(1);
+    if (recent && recent.length) {
+      return json(
+        { error: `You've just sent us a message — we'll reply to it shortly. You can write again in ${CONTACT_COOLDOWN_MIN} minutes.` },
+        429, origin,
+      );
+    }
 
     const { data, error } = await supabase
       .from("website_contact_messages")
@@ -208,10 +247,10 @@ Deno.serve(async (req) => {
 
   // --------------------------------------------------------------- buddy ---
   if (form === "buddy") {
-    const name = str(body.name, 120);
+    const name = str(body.name, MAX_NAME);
     const service = str(body.service, 20);
-    const phone = str(body.phone, 24);
-    const email = str(body.email, 160);
+    const phone = normPhone(str(body.phone, 24));
+    const email = str(body.email, MAX_EMAIL).toLowerCase();
     const location = str(body.location, 160);
     const note = str(body.note, 2000);
     const experience = Number(body.experience_years);
@@ -219,8 +258,10 @@ Deno.serve(async (req) => {
     if (name.length < 2) return json({ error: "Enter your name." }, 400, origin);
     if (!SERVICES.includes(service as typeof SERVICES[number]))
       return json({ error: "Choose the service you offer." }, 400, origin);
-    if (phone.length < 6) return json({ error: "Enter a valid phone number." }, 400, origin);
+    if (!isPhone10(phone)) return json({ error: "Enter a 10-digit phone number." }, 400, origin);
     if (!isEmail(email)) return json({ error: "Enter a valid email address." }, 400, origin);
+    if (words(note) > MAX_NOTE_WORDS)
+      return json({ error: `Please keep "Anything else?" under ${MAX_NOTE_WORDS} words.` }, 400, origin);
     if (location.length < 2) return json({ error: "Enter your city or area." }, 400, origin);
     if (!Number.isInteger(experience) || experience < 0 || experience > 10)
       return json({ error: "Choose your years of experience." }, 400, origin);
@@ -238,6 +279,12 @@ Deno.serve(async (req) => {
       .single();
 
     if (error) {
+      if (isDuplicate(error)) {
+        return json(
+          { error: "This email address has already applied as a Pet Buddy. We'll be in touch about that application — write to info@petlifeindia.co if you need to change anything." },
+          409, origin,
+        );
+      }
       console.error("buddy insert failed", error);
       return json({ error: "We couldn't save that. Please try again." }, 500, origin);
     }
@@ -258,9 +305,9 @@ Deno.serve(async (req) => {
 
   // -------------------------------------------------------------- career ---
   if (form === "career") {
-    const name = str(body.name, 120);
-    const phone = str(body.phone, 24);
-    const email = str(body.email, 160);
+    const name = str(body.name, MAX_NAME);
+    const phone = normPhone(str(body.phone, 24));
+    const email = str(body.email, MAX_EMAIL).toLowerCase();
     const position = str(body.position, 40);
     const experienceLevel = str(body.experience_level, 20);
     const coverNote = str(body.cover_note, 3000);
@@ -268,7 +315,7 @@ Deno.serve(async (req) => {
     const resumeB64 = typeof body.resume_base64 === "string" ? body.resume_base64 : "";
 
     if (name.length < 2) return json({ error: "Enter your full name." }, 400, origin);
-    if (phone.length < 6) return json({ error: "Enter a valid phone number." }, 400, origin);
+    if (!isPhone10(phone)) return json({ error: "Enter a 10-digit phone number." }, 400, origin);
     if (!isEmail(email)) return json({ error: "Enter a valid email address." }, 400, origin);
     if (!POSITIONS.includes(position as typeof POSITIONS[number]))
       return json({ error: "Choose the role you're applying for." }, 400, origin);
@@ -277,8 +324,7 @@ Deno.serve(async (req) => {
     if (coverNote.length < 10)
       return json({ error: "Tell us a little about yourself." }, 400, origin);
 
-    const words = coverNote.trim().split(/\s+/).length;
-    if (words > MAX_COVER_WORDS)
+    if (words(coverNote) > MAX_COVER_WORDS)
       return json({ error: `Please keep your profile under ${MAX_COVER_WORDS} words.` }, 400, origin);
 
     if (!resumeB64 || !resumeName)
@@ -332,9 +378,15 @@ Deno.serve(async (req) => {
       .single();
 
     if (error) {
-      console.error("career insert failed", error);
       // Don't leave an orphaned file behind if the row didn't land.
       await supabase.storage.from("resumes").remove([objectPath]);
+      if (isDuplicate(error)) {
+        return json(
+          { error: "This email address has already applied. We read every application — write to hr@petlifeindia.co if you'd like to update yours or apply for a different role." },
+          409, origin,
+        );
+      }
+      console.error("career insert failed", error);
       return json({ error: "We couldn't save that. Please try again." }, 500, origin);
     }
 

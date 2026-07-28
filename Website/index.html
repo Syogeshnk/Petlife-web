@@ -155,13 +155,13 @@
         <div class="hero__copy">
           <p class="eyebrow reveal">New beginnings · Stronger bonds · Happier tails</p>
           <h1 class="hero__title reveal">
-            Your neighbourhood's most trusted <em>pet people</em>.
+            Your neighbourhood's<br class="lb">most trusted <em>pet Buddy</em>.
           </h1>
           <p class="hero__tagline reveal">Happy Pet, Happy Life — Petlife</p>
           <p class="hero__sub reveal">
-            Petlife connects you directly with verified Pet Buddies right in your neighbourhood:
-            vets, walkers, groomers, trainers, boarding and pet taxi. Every Buddy is
-            checked against government ID, so you know exactly who's at your door.
+            Petlife connects you directly with verified Pet Buddies right in your neighbourhood:<br class="lb">
+            vets, walkers, groomers, trainers, boarding and pet taxi. Every Buddy<br class="lb">
+            is checked against government ID, so you know exactly who's at your door.
           </p>
           <p class="hero__promise reveal">
             <span class="dot" aria-hidden="true"></span>
@@ -299,7 +299,6 @@
       <div class="container">
         <p class="eyebrow reveal">Everything your pet needs</p>
         <h2 class="section__title reveal">One app, every kind of <em>care</em>.</h2>
-        <p class="section__sub reveal">Every Pet Buddy on Petlife is a real, government-ID verified neighbour, not a faceless listing.</p>
 
         <div class="services__grid">
           <a href="#join" class="service reveal" style="--tint:#DDEBDD">
@@ -439,7 +438,6 @@
     <section class="section section--surface" id="why">
       <div class="container">
         <p class="eyebrow reveal">Why Pet Parents choose Petlife</p>
-        <h2 class="section__title reveal">Built like we'd want it<br>for our <em>own</em> pets.</h2>
 
         <div class="bento">
           <article class="bento__cell bento__cell--tall bento__cell--verified reveal">
@@ -529,7 +527,9 @@
           <div class="join__copy reveal">
             <p class="eyebrow">For the pet people</p>
             <h2>Love pets? Keep <em>every rupee</em> you earn.</h2>
-            <p class="join__sub">Whether you run a clinic in Andheri or you're a student in Koramangala who never misses a chance to pet a dog, set your services, your hours, your area. Petlife brings the neighbourhood to you.</p>
+            <p class="join__sub">Whether you run a clinic in Andheri or you're a student in Koramangala<br class="lb">
+              who never misses a chance to pet a dog, set your services,<br class="lb">
+              your hours, your area. Petlife brings the neighbourhood to you.</p>
             <ul class="join__list">
               <li><span>✓</span> Free to join. We take <strong>0% commission</strong> on your earnings</li>
               <li><span>✓</span> You control your visibility, hours and service area</li>
@@ -550,7 +550,7 @@
 
             <div class="field">
               <label for="b-name">Your name <span aria-hidden="true">*</span></label>
-              <input type="text" id="b-name" name="name" autocomplete="name" required maxlength="120" placeholder="Priyanka Sharma">
+              <input type="text" id="b-name" name="name" autocomplete="name" required maxlength="80" placeholder="Priyanka Sharma">
               <p class="field__error" data-error-for="b-name"></p>
             </div>
 
@@ -574,12 +574,12 @@
             <div class="field-row">
               <div class="field">
                 <label for="b-phone">Phone number <span aria-hidden="true">*</span></label>
-                <input type="tel" id="b-phone" name="phone" autocomplete="tel" required maxlength="24" placeholder="98765 43210">
+                <input type="tel" id="b-phone" name="phone" autocomplete="tel" required maxlength="10" minlength="10" inputmode="numeric" pattern="[0-9]{10}" placeholder="9876543210">
                 <p class="field__error" data-error-for="b-phone"></p>
               </div>
               <div class="field">
                 <label for="b-email">Email <span aria-hidden="true">*</span></label>
-                <input type="email" id="b-email" name="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
+                <input type="email" id="b-email" name="email" autocomplete="email" required maxlength="80" placeholder="you@example.com">
                 <p class="field__error" data-error-for="b-email"></p>
               </div>
             </div>
@@ -631,10 +631,6 @@
       <div class="container">
         <p class="eyebrow eyebrow--center reveal">Tails of joy</p>
         <h2 class="section__title section__title--center reveal">The reviews are <em>in</em>.</h2>
-        <p class="section__sub section__sub--center reveal">
-          4.7 out of 5 across 7,500 completed bookings, from Pet Parents and Pet
-          Buddies in 32 cities.
-        </p>
 
         <div class="quotes">
           <figure class="quote reveal">
@@ -738,7 +734,8 @@
           <div class="contact__aside reveal">
             <p class="eyebrow">Care · Compassion · Connection</p>
             <h2>Talk to a<br>real <em>pet person</em>.</h2>
-            <p class="contact__sub">Questions about a booking, a Pet Buddy, or adopting? We answer every message ourselves, usually the same day.</p>
+            <p class="contact__sub">Questions about a booking, a Pet Buddy, or adopting? We<br class="lb">
+              answer every message ourselves, usually the same day.</p>
 
             <ul class="contact__list">
               <li>
@@ -778,19 +775,19 @@
 
             <div class="field">
               <label for="c-name">Your name <span aria-hidden="true">*</span></label>
-              <input type="text" id="c-name" name="name" autocomplete="name" required maxlength="120" placeholder="Aarav Mehta">
+              <input type="text" id="c-name" name="name" autocomplete="name" required maxlength="80" placeholder="Aarav Mehta">
               <p class="field__error" data-error-for="c-name"></p>
             </div>
 
             <div class="field-row">
               <div class="field">
                 <label for="c-email">Email <span aria-hidden="true">*</span></label>
-                <input type="email" id="c-email" name="email" autocomplete="email" required maxlength="160" placeholder="you@example.com">
+                <input type="email" id="c-email" name="email" autocomplete="email" required maxlength="80" placeholder="you@example.com">
                 <p class="field__error" data-error-for="c-email"></p>
               </div>
               <div class="field">
                 <label for="c-phone">Phone <span class="field__opt">Optional</span></label>
-                <input type="tel" id="c-phone" name="phone" autocomplete="tel" maxlength="24" placeholder="98765 43210">
+                <input type="tel" id="c-phone" name="phone" autocomplete="tel" maxlength="10" inputmode="numeric" pattern="[0-9]{10}" placeholder="9876543210">
               </div>
             </div>
 
