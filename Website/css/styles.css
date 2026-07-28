@@ -956,15 +956,6 @@ em { font-style: italic; }
    the card whatever the card's own height turns out to be, and it is hidden
    outright below 900px rather than faded — a barely-visible photo behind centred
    text reads as a broken image, not as a watermark. */
-/* Centred and in the flow, so it is visible at every width — the previous
-   absolute/right placement had to be hidden below 900px to avoid colliding with
-   the centred copy, which meant it disappeared on exactly the screens most
-   visitors use. Small enough that keeping it inline costs the card little. */
-.cta-final__pets {
-  display: block; margin: 0 auto 12px;
-  width: clamp(112px, 20vw, 148px); height: auto;
-  position: relative;
-}
 .cta-final__card h2 {
   font-family: var(--font-display); color: #fff; font-weight: 600;
   font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.15;
