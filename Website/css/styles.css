@@ -198,6 +198,17 @@ em { font-style: italic; }
   transition: background .3s var(--ease), box-shadow .3s var(--ease),
               border-color .3s var(--ease);
 }
+/* backdrop-filter establishes a CSS containing block, which traps the mobile
+   menu's position:fixed overlay inside this small rounded pill instead of the
+   viewport - its "full-screen" white background then only covers the pill,
+   and the menu links render outside it with nothing solid behind them. The
+   burger click handler in main.js toggles this class purely to drop the
+   blur while the menu is open, freeing the overlay to fill the screen as
+   intended. Background stays solid so the pill itself doesn't look empty. */
+.nav.nav--menu-open .nav__inner {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  background: var(--bg-white);
+}
 .nav.is-scrolled, .nav.is-solid { padding: 10px 0; }
 .nav.is-scrolled .nav__inner, .nav.is-solid .nav__inner {
   background: rgba(255,255,255,0.94);

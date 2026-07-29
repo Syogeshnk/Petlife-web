@@ -18,12 +18,20 @@
   /* ---------- Mobile menu ---------- */
   const burger = document.getElementById("navBurger");
   const links = document.getElementById("navLinks");
+  const navEl = document.getElementById("nav");
   if (burger && links) {
     burger.addEventListener("click", () => {
       const open = links.classList.toggle("is-open");
       burger.classList.toggle("is-open", open);
       burger.setAttribute("aria-expanded", String(open));
       document.body.style.overflow = open ? "hidden" : "";
+      // .nav__inner's backdrop-filter creates a containing block for the
+      // fixed-position menu overlay, so the full-screen white background only
+      // covered the small rounded nav pill instead of the viewport, and the
+      // menu text rendered over the page with nothing solid behind it.
+      // Dropping the blur while the menu is open removes that containing
+      // block so the overlay actually fills the screen.
+      if (navEl) navEl.classList.toggle("nav--menu-open", open);
     });
     links.querySelectorAll("a").forEach((a) =>
       a.addEventListener("click", () => {
@@ -31,6 +39,7 @@
         burger.classList.remove("is-open");
         burger.setAttribute("aria-expanded", "false");
         document.body.style.overflow = "";
+        if (navEl) navEl.classList.remove("nav--menu-open");
       })
     );
   }
