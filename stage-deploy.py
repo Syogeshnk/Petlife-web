@@ -23,6 +23,9 @@ FILES = [
     "index.html", "careers.html", "terms.html", "privacy.html", "disclaimer.html",
     "404.html",
     "_headers", "_redirects", "robots.txt", "sitemap.xml", "manifest.json",
+    # Root-level, not /petlife/: some crawlers and older browsers request
+    # /favicon.ico directly regardless of what the <link rel="icon"> tags say.
+    "favicon.ico",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
 # files so a new city is one file drop, with no risk of the page shipping to
@@ -38,7 +41,7 @@ TREES = ["css", "js", "pet-services"]
 # before adding anything back here.
 BRAND = [
     "logo.png",
-    "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
+    "favicon-48.png", "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
     "icon-192.png", "icon-512.png",
 ]
 

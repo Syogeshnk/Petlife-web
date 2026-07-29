@@ -35,6 +35,10 @@
 /petlife/*
   Cache-Control: public, max-age=604800
 
+# Brand asset that happens to live at the root rather than under /petlife/.
+/favicon.ico
+  Cache-Control: public, max-age=604800
+
 # Referenced by name, not fingerprinted, same reasoning as the HTML above.
 /manifest.json
   Cache-Control: public, max-age=0, must-revalidate
