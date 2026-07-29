@@ -26,6 +26,10 @@ FILES = [
     # Root-level, not /petlife/: some crawlers and older browsers request
     # /favicon.ico directly regardless of what the <link rel="icon"> tags say.
     "favicon.ico",
+    # IndexNow key file. Bing/Yandex require it served at the domain root,
+    # filename matching its own contents exactly - it is how they confirm
+    # whoever calls the IndexNow API actually controls this domain.
+    "76d48966d015c895bf9e7966275bd8ac.txt",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
 # files so a new city is one file drop, with no risk of the page shipping to
