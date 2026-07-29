@@ -1,0 +1,16 @@
+{
+  "name": "Petlife India — Pet Parent & Pet Buddy App",
+  "short_name": "Petlife",
+  "description": "Connect with verified, government-ID checked Pet Buddies for dog walking, boarding, vet visits and grooming. 0% commission, always.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#F7F3ED",
+  "theme_color": "#1F6B3C",
+  "orientation": "portrait-primary",
+  "lang": "en-IN",
+  "icons": [
+    { "src": "/petlife/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/petlife/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

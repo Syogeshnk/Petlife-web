@@ -34,3 +34,7 @@
 # Brand assets change rarely.
 /petlife/*
   Cache-Control: public, max-age=604800
+
+# Referenced by name, not fingerprinted, same reasoning as the HTML above.
+/manifest.json
+  Cache-Control: public, max-age=0, must-revalidate

@@ -22,7 +22,7 @@ DIST = ROOT / "dist"
 FILES = [
     "index.html", "careers.html", "terms.html", "privacy.html", "disclaimer.html",
     "404.html",
-    "_headers", "_redirects", "robots.txt", "sitemap.xml",
+    "_headers", "_redirects", "robots.txt", "sitemap.xml", "manifest.json",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
 # files so a new city is one file drop, with no risk of the page shipping to
@@ -36,7 +36,11 @@ TREES = ["css", "js", "pet-services"]
 # more, so it was 159 KB shipped to every deploy for nothing. Check with
 #     grep -rn "<name>" --include=*.html --include=*.css --include=*.js Website/
 # before adding anything back here.
-BRAND = ["logo.png"]
+BRAND = [
+    "logo.png",
+    "favicon-32.png", "favicon-16.png", "apple-touch-icon.png",
+    "icon-192.png", "icon-512.png",
+]
 
 
 def main() -> int:
