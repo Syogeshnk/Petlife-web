@@ -328,6 +328,176 @@ CITIES = [
                   "Verification takes a government ID and a few minutes, and you keep 100% of what "
                   "you charge."),
     },
+    {
+        "slug": "mangaluru",
+        "name": "Mangaluru",
+        "state": "Karnataka",
+        "buddies": 23,
+        "bookings": None,
+        "title": "Pet Services in Mangaluru | Dog Walking, Boarding, Vet &amp; Grooming — Petlife",
+        "meta": "23 verified Pet Buddies in Mangaluru for dog walking, pet boarding, veterinary care and grooming. Every Pet Buddy is checked against government ID. 0% commission — pay your Pet Buddy directly.",
+        "ogdesc": "23 verified Pet Buddies in Mangaluru for dog walking, boarding, vet visits and grooming. Government-ID checked, 0% commission.",
+        "h1": 'A Pet Buddy who already knows your <em>gully</em>.',
+        "herosub": (
+            "Dog walking, boarding, vet visits and grooming across Mangaluru, from "
+            "<strong>23 verified Pet Buddies</strong> we have checked against government ID. "
+            "You pay them directly, and Petlife takes 0% of it."
+        ),
+        "areas_intro": (
+            "Mangaluru is smaller and newer for us than Bengaluru, so we are not yet claiming "
+            "specific neighbourhoods here the way we do there. What we can tell you honestly is "
+            "the city-wide total, and that it grows every month."
+        ),
+        "areas": [
+            ("Mangaluru (city-wide)", 23, "Our full count for the city today, without a locality breakdown yet."),
+        ],
+        "nearby": ("Bengaluru", 65, "Karnataka",
+                   "We also have 65 verified Pet Buddies in Bengaluru. It is a separate city about "
+                   "350km away, not a Mangaluru neighbourhood, so it has its own page rather than "
+                   "being folded into this one."),
+        "services_title": 'Four things Mangaluru pets <em>need</em>.',
+        "services": [
+            ("🦮", "Dog walking in Mangaluru", [
+                "Mangaluru's monsoon is serious business, not a light drizzle, and it runs long: "
+                "June through September regularly floods streets that are fine the rest of the "
+                "year. Pet Buddies here set their own hours and service area, so you can see who "
+                "is genuinely willing to walk in it rather than finding out at the door.",
+                "Outside monsoon, the coastal humidity means early mornings and evenings are what "
+                "most walkers and dogs actually prefer.",
+            ], None),
+            ("🏠", "Pet boarding in Mangaluru", [
+                "Home-style boarding for trips home during college admissions season, festivals, "
+                "or work travel. You meet the Pet Buddy and see the home first.",
+                "With a smaller Pet Buddy community than the bigger metros, it is worth reaching "
+                "out a little earlier than you would in Bengaluru or Mumbai.",
+            ], None),
+            ("🩺", "Veterinary care in Mangaluru", [
+                "Clinic visits and house calls from vets near you. Vets on Petlife can add "
+                "professional credentials, which we verify separately from their identity check.",
+            ], "Petlife is not a veterinary provider and nothing here is veterinary advice. "
+               "In an emergency, contact a vet directly."),
+            ("✂️", "Pet grooming in Mangaluru", [
+                "Baths, trims and nail clips, at home or at a salon depending on which Pet Buddies "
+                "are near you.",
+                "Coastal humidity is hard on longer coats year-round, not just in monsoon, and "
+                "groomers here are used to that.",
+            ], None),
+        ],
+        "faqs": [
+            ("How many Pet Buddies are there in Mangaluru?",
+             'There are <strong>23 verified Pet Buddies</strong> in Mangaluru. Every one was checked '
+             'against a government identity document before their profile went live.',
+             "There are 23 verified Pet Buddies in Mangaluru. Every one was checked against a "
+             "government identity document before their profile went live."),
+            ("Do you have a neighbourhood breakdown for Mangaluru?",
+             "Not yet. Mangaluru is a newer community for us than Bengaluru or Pune, so for now we "
+             "can only give you the city-wide total rather than a locality-by-locality count. Open "
+             "the app to see who is actually near your address.",
+             "Not yet. Mangaluru is a newer community for us than Bengaluru or Pune, so for now we "
+             "can only give you the city-wide total rather than a locality-by-locality count. Open "
+             "the app to see who is actually near your address."),
+            ("What does Petlife charge in Mangaluru?",
+             'Nothing. <strong>0% commission</strong>, no booking fee, no platform fee, no surge '
+             'pricing. You agree a price with your Pet Buddy and pay them directly, in full.',
+             "Nothing. 0% commission, no booking fee, no platform fee, no surge pricing. You agree "
+             "a price with your Pet Buddy and pay them directly, in full."),
+            ("Is Mangaluru covered by Bengaluru Pet Buddies?",
+             'No. Mangaluru is a separate city about 350km from Bengaluru, with its own 23 verified '
+             'Pet Buddies. <a href="/pet-services/bangalore">See Bengaluru\'s page</a> if that is '
+             'the city you meant.',
+             "No. Mangaluru is a separate city about 350km from Bengaluru, with its own 23 verified "
+             "Pet Buddies."),
+        ],
+        "cta_h2": "Are you the Pet Buddy Mangaluru needs?",
+        "cta_p": ("If you already walk, board, groom or treat pets around Mangaluru, list yourself "
+                  "free. Verification takes a government ID and a few minutes, and you keep 100% "
+                  "of what you charge."),
+    },
+    {
+        "slug": "nashik",
+        "name": "Nashik",
+        "state": "Maharashtra",
+        "buddies": 29,
+        "bookings": None,
+        "title": "Pet Services in Nashik | Dog Walking, Boarding, Vet &amp; Grooming — Petlife",
+        "meta": "29 verified Pet Buddies in Nashik for dog walking, pet boarding, veterinary care and grooming. Every Pet Buddy is checked against government ID. 0% commission — pay your Pet Buddy directly.",
+        "ogdesc": "29 verified Pet Buddies in Nashik for dog walking, boarding, vet visits and grooming. Government-ID checked, 0% commission.",
+        "h1": 'A Pet Buddy on your <em>own</em> road.',
+        "herosub": (
+            "Dog walking, boarding, vet visits and grooming across Nashik, from "
+            "<strong>29 verified Pet Buddies</strong> we have checked against government ID. "
+            "You pay them directly, and Petlife takes 0% of it."
+        ),
+        "areas_intro": (
+            "Nashik is smaller and newer for us than Pune, so we are not yet claiming specific "
+            "neighbourhoods here the way we do there. What we can tell you honestly is the "
+            "city-wide total, and that it grows every month."
+        ),
+        "areas": [
+            ("Nashik (city-wide)", 29, "Our full count for the city today, without a locality breakdown yet."),
+        ],
+        "nearby": ("Pune", 90, "Maharashtra",
+                   "We also have 90 verified Pet Buddies in Pune. It is a separate city about 165km "
+                   "away, not a Nashik suburb, so it has its own page rather than being folded into "
+                   "this one."),
+        "services_title": 'Four things Nashik pets <em>need</em>.',
+        "services": [
+            ("🦮", "Dog walking in Nashik", [
+                "Nashik's winters are genuinely cool by Maharashtra standards, which means more "
+                "dogs who want a proper midday walk rather than only dawn and dusk. Pet Buddies "
+                "set their own hours and service area, so you can find someone free at whatever "
+                "time actually suits your dog.",
+                "During Kumbh Mela and other major religious gatherings, the city gets crowded fast "
+                "- worth booking a familiar Pet Buddy ahead rather than searching last minute.",
+            ], None),
+            ("🏠", "Pet boarding in Nashik", [
+                "Home-style boarding for trips to Mumbai or Pune, and for the festival season when "
+                "the city fills up. You meet the Pet Buddy and see the home first.",
+                "With a smaller Pet Buddy community than the bigger metros, it is worth reaching "
+                "out a little earlier than you would in Pune or Mumbai.",
+            ], None),
+            ("🩺", "Veterinary care in Nashik", [
+                "Clinic visits and house calls from vets near you. Vets on Petlife can add "
+                "professional credentials, which we verify separately from their identity check.",
+            ], "Petlife is not a veterinary provider and nothing here is veterinary advice. "
+               "In an emergency, contact a vet directly."),
+            ("✂️", "Pet grooming in Nashik", [
+                "Baths, trims and nail clips, at home or at a salon depending on which Pet Buddies "
+                "are near you.",
+                "Nashik's drier climate and dustier roads near the industrial belt mean paw and "
+                "coat care matters more here than the humidity-driven issues of the coast.",
+            ], None),
+        ],
+        "faqs": [
+            ("How many Pet Buddies are there in Nashik?",
+             'There are <strong>29 verified Pet Buddies</strong> in Nashik. Every one was checked '
+             'against a government identity document before their profile went live.',
+             "There are 29 verified Pet Buddies in Nashik. Every one was checked against a "
+             "government identity document before their profile went live."),
+            ("Do you have a neighbourhood breakdown for Nashik?",
+             "Not yet. Nashik is a newer community for us than Pune, so for now we can only give "
+             "you the city-wide total rather than a locality-by-locality count. Open the app to "
+             "see who is actually near your address.",
+             "Not yet. Nashik is a newer community for us than Pune, so for now we can only give "
+             "you the city-wide total rather than a locality-by-locality count. Open the app to "
+             "see who is actually near your address."),
+            ("What does Petlife charge in Nashik?",
+             'Nothing. <strong>0% commission</strong>, no booking fee, no platform fee, no surge '
+             'pricing. You agree a price with your Pet Buddy and pay them directly, in full.',
+             "Nothing. 0% commission, no booking fee, no platform fee, no surge pricing. You agree "
+             "a price with your Pet Buddy and pay them directly, in full."),
+            ("Is Nashik covered by Pune Pet Buddies?",
+             'No. Nashik is a separate city about 165km from Pune, with its own 29 verified Pet '
+             'Buddies. <a href="/pet-services/pune">See Pune\'s page</a> if that is the city you '
+             'meant.',
+             "No. Nashik is a separate city about 165km from Pune, with its own 29 verified Pet "
+             "Buddies."),
+        ],
+        "cta_h2": "Are you the Pet Buddy Nashik needs?",
+        "cta_p": ("If you already walk, board, groom or treat pets around Nashik, list yourself "
+                  "free. Verification takes a government ID and a few minutes, and you keep 100% "
+                  "of what you charge."),
+    },
 ]
 
 SHARED_FAQ = (
@@ -487,9 +657,17 @@ def render(city, all_cities):
     nearby_html = ""
     if city["nearby"]:
         nname, ncount, nstate, nblurb = city["nearby"]
+        # If the nearby city has its own page in this run, link straight to
+        # it rather than just naming it in prose - that's an internal link a
+        # visitor in the wrong city can actually use.
+        nslug = next((c["slug"] for c in all_cities if c["name"] == nname), None)
+        heading = (
+            f'Also nearby: <a href="/pet-services/{nslug}">{nname}</a>'
+            if nslug else f"Also nearby: {nname}"
+        )
         nearby_html = f"""
         <div class="areas__nearby reveal">
-          <h3>Also nearby: {nname}</h3>
+          <h3>{heading}</h3>
           <p>{nblurb}</p>
         </div>"""
 
@@ -522,6 +700,26 @@ def render(city, all_cities):
         f'<strong>{c["name"]}</strong><span>{c["buddies"]} verified Pet Buddies</span></a>'
         for c in others
     )
+
+    # --- local numbers strip ----------------------------------------------
+    # bookings is None for cities where we only have the Pet Buddy count so
+    # far, not a booking total - showing a made-up number would be exactly
+    # the kind of stale/invented claim Clause 11.2 exists to prevent, so the
+    # strip just drops to two stats rather than fabricate a third.
+    stats = [
+        f'<div class="strip__stat"><span class="strip__num" data-count="{city["buddies"]}">0</span>'
+        f'<span class="strip__label">Verified Pet Buddies in {name}</span></div>'
+    ]
+    if city.get("bookings"):
+        stats.append(
+            f'<div class="strip__stat"><span class="strip__num" data-count="{city["bookings"]}">0</span>'
+            f'<span class="strip__label">Bookings completed here</span></div>'
+        )
+    stats.append(
+        '<div class="strip__stat"><span class="strip__num strip__num--star" data-count="4.7" '
+        'data-decimal="1">0</span><span class="strip__label">Average rating</span></div>'
+    )
+    strip_html = "\n          ".join(stats)
 
     return f"""<!DOCTYPE html>
 <html lang="en">
@@ -599,9 +797,7 @@ def render(city, all_cities):
     <section class="strip">
       <div class="container">
         <div class="strip__card reveal">
-          <div class="strip__stat"><span class="strip__num" data-count="{city['buddies']}">0</span><span class="strip__label">Verified Pet Buddies in {name}</span></div>
-          <div class="strip__stat"><span class="strip__num" data-count="{city['bookings']}">0</span><span class="strip__label">Bookings completed here</span></div>
-          <div class="strip__stat"><span class="strip__num strip__num--star" data-count="4.7" data-decimal="1">0</span><span class="strip__label">Average rating</span></div>
+          {strip_html}
         </div>
       </div>
     </section>
