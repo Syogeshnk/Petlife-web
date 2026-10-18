@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open in Petlife | Petlife India</title>
+  <meta name="description" content="Someone shared a Petlife profile with you. Open it in the Petlife app.">
+  <!-- Served for every /profile/<slug> link shared from the app (audit PL-262, 2026-10-18). It holds NO
+       profile data and fetches none: a shared link must not turn the public website into a way to read
+       someone's profile without an account. It only hands the slug to the app. Never indexed. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#1F6B3C">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/petlife/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/petlife/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,600&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <header class="nav is-solid" id="nav">
+    <div class="nav__inner">
+      <a href="/" class="nav__logo" aria-label="Petlife home">
+        <img src="/petlife/logo.png" alt="" width="42" height="42">
+        <span class="nav__logo-text">Petlife</span>
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <svg class="deco__wave" viewBox="0 0 1440 190" preserveAspectRatio="none" fill="currentColor" aria-hidden="true"><path d="M0 96c140-46 286-64 430-40 132 22 244 74 380 82 148 9 292-33 428-79 76-26 148-46 202-53v184H0Z"/></svg>
+      <div class="container container--mid">
+        <p class="eyebrow">Shared with you</p>
+        <h1 class="page-hero__title">A Petlife <em>profile</em> is waiting.</h1>
+        <p class="page-hero__sub page-hero__sub--wide" id="openProfileIntro">
+          Someone shared a Pet Buddy or Pet Parent profile with you. It opens in the Petlife app.
+        </p>
+        <p class="page-hero__sub page-hero__sub--wide" id="openProfileInvalid" hidden>
+          This link isn't complete. Ask the person who sent it to share it again.
+        </p>
+        <div class="page-hero__ctas">
+          <!-- href is set by /js/open-profile.js from the path, after checking it; the default goes home. -->
+          <a href="/" class="btn btn--primary" id="openProfileApp">Open in Petlife</a>
+          <a href="/" class="btn btn--outline">About Petlife</a>
+        </div>
+        <p class="page-hero__sub page-hero__sub--wide">
+          Don't have the app yet? Petlife is coming soon to Google Play and the App Store.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__bottom">
+        <p>&copy; 2026 Petlife India. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/open-profile.js"></script>
+</body>
+</html>

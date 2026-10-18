@@ -30,6 +30,8 @@ FILES = [
     # filename matching its own contents exactly - it is how they confirm
     # whoever calls the IndexNow API actually controls this domain.
     "76d48966d015c895bf9e7966275bd8ac.txt",
+    # The /profile/<slug> fallback for links shared from the app (PL-262). Its script is in js/.
+    "open-profile.html",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
 # files so a new city is one file drop, with no risk of the page shipping to

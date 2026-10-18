@@ -19,3 +19,9 @@
 # either way; the redirect is for canonical SEO and clean analytics.
 #
 # Same-origin path redirects (e.g. /old-page /new-page 301) are fine to add below.
+
+# Shared profile links from the app (audit PL-262, 2026-10-18): https://petlifeindia.co/profile/<slug>
+# is served the static "Open in Petlife" page — a 200 REWRITE, so the address bar keeps the /profile/
+# path that open-profile.js reads the slug from. The target is written without ".html": Workers Assets
+# redirects /x.html to /x, and a rewrite onto a redirect is a redirect (the admin SPA lesson).
+/profile/*  /open-profile  200
