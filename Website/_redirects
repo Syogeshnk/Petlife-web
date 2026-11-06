@@ -25,3 +25,8 @@
 # path that open-profile.js reads the slug from. The target is written without ".html": Workers Assets
 # redirects /x.html to /x, and a rewrite onto a redirect is a redirect (the admin SPA lesson).
 /profile/*  /open-profile  200
+
+# Password-changed alert (owner 6 Nov 2026): the email link and the WhatsApp "Reset Password" button point at
+# https://petlifeindia.co/forgot-password. A 200 rewrite onto the static "Reset your password" page, which hands over
+# to petlife://forgot-password. Written without ".html" for the same reason as the profile rule above.
+/forgot-password  /open-forgot-password  200
