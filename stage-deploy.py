@@ -35,11 +35,15 @@ FILES = [
     # The /forgot-password fallback for the password-changed alert link (owner 6 Nov 2026). _redirects rewrites
     # /forgot-password onto it, so leaving it out of dist turns the rule into a live 404.
     "open-forgot-password.html",
+    # Account deletion page, the URL given to Google Play (owner prompt 16 Nov 2026).
+    "delete-account.html",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
 # files so a new city is one file drop, with no risk of the page shipping to
 # git but silently 404ing in production because this list was not updated.
-TREES = ["css", "js", "pet-services"]
+# .well-known/ holds assetlinks.json (Android App Links for co.petlife.app). It must reach dist or the
+# links open in the browser instead of the app.
+TREES = ["css", "js", "pet-services", ".well-known"]
 # petlife/ is copied selectively: the served artwork only. The masters are the
 # source of record (1.5 MB) and have no business being downloaded by visitors.
 # Anything referenced from the HTML must be listed here or it 404s in production.

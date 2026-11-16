@@ -37,12 +37,17 @@
   </url>
   <url>
     <loc>https://petlifeindia.co/terms</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://petlifeindia.co/privacy</loc>
-    <lastmod>2026-07-28</lastmod>
+    <lastmod>2026-11-16</lastmod>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://petlifeindia.co/delete-account</loc>
+    <lastmod>2026-11-16</lastmod>
     <priority>0.3</priority>
   </url>
   <url>
