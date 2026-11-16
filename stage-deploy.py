@@ -32,6 +32,9 @@ FILES = [
     "76d48966d015c895bf9e7966275bd8ac.txt",
     # The /profile/<slug> fallback for links shared from the app (PL-262). Its script is in js/.
     "open-profile.html",
+    # The /forgot-password fallback for the password-changed alert link (owner 6 Nov 2026). _redirects rewrites
+    # /forgot-password onto it, so leaving it out of dist turns the rule into a live 404.
+    "open-forgot-password.html",
 ]
 # pet-services/ holds the city landing pages. It is a tree rather than named
 # files so a new city is one file drop, with no risk of the page shipping to
