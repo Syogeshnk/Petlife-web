@@ -899,8 +899,8 @@ def render(city, all_cities):
 
 {footer(all_cities)}
 
-  <script src="/js/config.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="/js/config.js?v=20261117"></script>
+  <script src="/js/main.js?v=20261117"></script>
 </body>
 </html>
 """

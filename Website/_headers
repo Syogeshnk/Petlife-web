@@ -18,7 +18,7 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=()
   Strict-Transport-Security: max-age=31536000; includeSubDomains
-  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://umvsromotyjbrzykmqoh.supabase.co https://cloudflareinsights.com
+  Content-Security-Policy-Report-Only: default-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; object-src 'none'; script-src 'self' https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self' https://fazxqwlaxrahqpojousl.supabase.co https://cloudflareinsights.com
 
 # HTML is re-fetched often so copy fixes go live quickly.
 /*.html
@@ -26,6 +26,8 @@
 
 # css/ and js/ filenames are not fingerprinted, so they must revalidate or a
 # deploy would leave visitors on stale styles and an old form handler.
+# The pages load js/config.js and js/main.js with ?v=<date>; change that date in every
+# page (and build_city_pages.py) when either file changes, so browsers fetch it at once.
 /css/*
   Cache-Control: public, max-age=3600, must-revalidate
 /js/*
