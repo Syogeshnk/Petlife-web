@@ -160,6 +160,28 @@ account. You don't need it.)
 
 ### 2d. Log in with the NEW account
 
+**First, clear the old token setting (this window only).** This computer has a Windows environment variable,
+`SUPABASE_ACCESS_TOKEN`, holding an old token in a retired format. While it's set, `login` fails with
+`cannot save provided token: Invalid access token format. Must be like sbp_0102...1920`, and every later command
+would use the old token instead of your new login.
+
+```powershell
+Test-Path Env:SUPABASE_ACCESS_TOKEN
+```
+
+**You should see:** `True` (if `False`, skip the next command). This only answers yes or no; it doesn't show the
+token.
+
+```powershell
+Remove-Item Env:SUPABASE_ACCESS_TOKEN
+Test-Path Env:SUPABASE_ACCESS_TOKEN
+```
+
+**You should see:** `False`
+
+This lasts only for this terminal window. **Do steps 2d to 4c in the same window.** If you open a new one, run
+`Remove-Item Env:SUPABASE_ACCESS_TOKEN` again first.
+
 If this computer was ever logged in to the old account, log out first:
 
 ```powershell
