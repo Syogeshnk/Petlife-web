@@ -15,8 +15,8 @@ window.PETLIFE_CONFIG = {
   // app's project. The publishable key is safe in the browser: it only lets the
   // page call the submit-form edge function, and the website_* tables have RLS
   // on with no policies, so only the service role can read or write them.
-  SUPABASE_URL: "https://umvsromotyjbrzykmqoh.supabase.co",
-  SUPABASE_ANON_KEY: "sb_publishable_u8dhsYJQxNQP5F9wA7oi-Q_lP8amE6U",
+  SUPABASE_URL: "https://fazxqwlaxrahqpojousl.supabase.co",
+  SUPABASE_ANON_KEY: "sb_publishable_HNpi1SbPDbs_GgKaV2WFpQ_ItMxiG9o",
 
   // Public contact details, rendered into the page.
   PHONE: "+918451072388",
