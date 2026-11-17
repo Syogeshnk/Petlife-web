@@ -26,8 +26,8 @@
 
 # css/ and js/ filenames are not fingerprinted, so they must revalidate or a
 # deploy would leave visitors on stale styles and an old form handler.
-# The pages load js/config.js and js/main.js with ?v=<date>; change that date in every
-# page (and build_city_pages.py) when either file changes, so browsers fetch it at once.
+# The pages load css/styles.css, js/config.js and js/main.js with ?v=<date>; change that
+# date in every page (and build_city_pages.py) when one changes, so browsers fetch it at once.
 /css/*
   Cache-Control: public, max-age=3600, must-revalidate
 /js/*
