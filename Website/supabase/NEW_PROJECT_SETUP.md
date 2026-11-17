@@ -84,8 +84,8 @@ select id, public from storage.buckets where id in ('resumes', 'site-media') ord
 And this, which checks that the tables are locked (only the server can use them):
 
 ```sql
-select relname, relrowsecurity from pg_class
-where relname like 'website_%' and relkind = 'r' order by 1;
+  select relname, relrowsecurity from pg_class
+  where relname like 'website_%' and relkind = 'r' order by 1;
 ```
 
 **You should see `true` in all 3 rows:**
@@ -112,7 +112,7 @@ twice is harmless. Any other error: copy the full message to me.
 cd "E:\Pet_Life_India\Petlife web\Petlife-web\Website"
 ```
 
-**You should see:** the prompt change to `PS E:\Pet_Life_India\Petlife web\Petlife-web\Website>`.
+**You should see:** the prompt change to `PS E:\Pet_Life_India\Petlife web\Petlife-web\Website  >`.
 
 Check that the function is there:
 
@@ -136,7 +136,7 @@ terminal, and start again at 2a.
 ### 2c. Check the CLI runs
 
 ```powershell
-npx supabase@3.2.0 --version
+npx.cmd supabase@3.2.0 --version
 ```
 
 **The first time you'll see:**
@@ -149,15 +149,21 @@ Ok to proceed? (y)
 
 Type `y` and press Enter. **Then you should see:** `3.2.0`
 
-(`npx supabase@3.2.0` runs that exact version without installing anything globally. Every command below uses
+(`npx.cmd supabase@3.2.0` runs that exact version without installing anything globally. Every command below uses
 the same version, so the flags match this guide.)
+
+**Why `npx.cmd` and not `npx`:** on this computer, Windows PowerShell blocks script files, so plain `npx` fails with
+`File C:\Program Files\nodejs\npx.ps1 cannot be loaded because running scripts is disabled on this system`.
+`npx.cmd` is the same program and isn't blocked, and nothing on the computer has to change.
+(The other fix is `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned`, which allows local scripts for your user
+account. You don't need it.)
 
 ### 2d. Log in with the NEW account
 
 If this computer was ever logged in to the old account, log out first:
 
 ```powershell
-npx supabase@3.2.0 logout
+npx.cmd supabase@3.2.0 logout
 ```
 
 **You should see** `Access token deleted successfully. You are now logged out.` (or a message that you weren't
@@ -166,7 +172,7 @@ logged in; either is fine).
 Now log in:
 
 ```powershell
-npx supabase@3.2.0 login
+npx.cmd supabase@3.2.0 login
 ```
 
 **You should see something like:**
@@ -190,12 +196,12 @@ You are now logged in. Happy coding!
 ### 2e. Check you're on the right account
 
 ```powershell
-npx supabase@3.2.0 projects list
+npx.cmd supabase@3.2.0 projects list
 ```
 
 **You should see a table that includes** a row with `REFERENCE ID` = `fazxqwlaxrahqpojousl`.
 
-**If that row is missing:** you're logged in to the old account. Run `npx supabase@3.2.0 logout`, then repeat 2d.
+**If that row is missing:** you're logged in to the old account. Run `npx.cmd supabase@3.2.0 logout`, then repeat 2d.
 In the browser, make sure you're signed in to the new account first:
 <https://supabase.com/dashboard/account/me>
 
@@ -206,7 +212,7 @@ In the browser, make sure you're signed in to the new account first:
 Still in the `Website` folder:
 
 ```powershell
-npx supabase@3.2.0 functions deploy submit-form --remote=fazxqwlaxrahqpojousl --no-verify-jwt --use-api
+npx.cmd supabase@3.2.0 functions deploy submit-form --remote=fazxqwlaxrahqpojousl --no-verify-jwt --use-api
 ```
 
 What the three options do:
@@ -281,7 +287,7 @@ This asks for the key without saving it in your command history:
 
 ```powershell
 $k = Read-Host "Paste the Resend key (re_...)"
-npx supabase@3.2.0 secrets set "RESEND_API_KEY=$k" --remote=fazxqwlaxrahqpojousl
+npx.cmd supabase@3.2.0 secrets set "RESEND_API_KEY=$k" --remote=fazxqwlaxrahqpojousl
 Remove-Variable k
 ```
 
@@ -290,7 +296,7 @@ Remove-Variable k
 ### 4c. Check the secret is there
 
 ```powershell
-npx supabase@3.2.0 secrets list --remote=fazxqwlaxrahqpojousl
+npx.cmd supabase@3.2.0 secrets list --remote=fazxqwlaxrahqpojousl
 ```
 
 **You should see a table** with `NAME` and `DIGEST` columns that includes `RESEND_API_KEY` (plus
